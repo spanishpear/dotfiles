@@ -1,14 +1,22 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 ZSH_DISABLE_COMPFIX=true
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/shreysomaiya/.oh-my-zsh"
-export LDFLAGS="-L/usr/local/opt/ruby/lib"
-export CPPFLAGS="-I/usr/local/opt/ruby/include"
-export LDFLAGS="-L/usr/local/opt/readline/lib"
-export CPPFLAGS="-I/usr/local/opt/readline/include"
-export PKG_CONFIG_PATH="/usr/local/opt/readline/lib/pkgconfig"
-export KIVY_VIDEO=ffpyplayer
+export ZSH="/home/shrey/.oh-my-zsh"
+
+# linuxbrew required
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/isl@0.18/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/isl@0.18/include"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/isl@0.18/lib/pkgconfig"
+
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -21,6 +29,7 @@ export KIVY_VIDEO=ffpyplayer
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
  
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
  
@@ -68,12 +77,11 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
- git pip python brew osx node npm github zsh-syntax-highlighting zsh-autosuggestions git-open git-prompt
+ git pip python brew node npm github zsh-syntax-highlighting zsh-autosuggestions git-open git-prompt zsh-z
 )
  
 source $ZSH/oh-my-zsh.sh
-alias cat='bat'
- 
+local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
  
 # User configuration
  
@@ -83,27 +91,26 @@ export MANPATH="/usr/local/man:$MANPATH"
 # export LANG=en_US.UTF-8
  
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
- export EDITOR='vim'
-else
-  export EDITOR='code'
-fi
- 
+export EDITOR='micro'
  
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
- 
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="code ~/.zshrc"
+alias zshconfig="micro ~/.zshrc"
+alias zshrc="micro ~/.zshrc"
+alias bat="batcat"
+alias vpn="nordvpn"
 alias ohmyzsh="code ~/.oh-my-zsh"
 alias p="perl"
 alias start="S"
 alias transfer="T"
+alias ls="exa"
 alias ll="exa -l"
 alias ns="npm start"
 alias clr="clear"
@@ -112,18 +119,59 @@ alias L="| less"
 alias M="| more"
 alias H="| head"
 alias gs="git status"
-alias log="git log 2>/dev/null || cat log.out 2>/dev/null"
+alias glog="git log 2>/dev/null || cat log.out 2>/dev/null"
 alias py3="python3"
 alias cse="ssh cse"
+alias site="ssh site"
 alias gcm="git add . && gc -m"
-alias gcp='(){ ga . && gc -m $1 && gp;}'                                                                                                       
-alias rebuild="pushd $(pwd) && cd ~/cs3231/asst3-src/kern/compile/ASST3 && bmake && bmake install && cd ~/cs3231/root && sys161 kernel; popd"
-alias frebuild="pushd $(pwd) && cd ~/cs3231/asst3-src && ./configure && bmake && bmake install && cd kern/conf && ./config ASST3 && cd ../compile/ASST3 && bmake depend && bmake && bmake install && popd"
-export PROMPT='${ret_status} %{$fg[magenta]%}%c%{$reset_color%} $(git_super_status) %% '
-export PATH=$PATH:$HOME/.os161-toolchain/bin
-export PATH=/Applications/MAMP/bin/php/php7.4.2/bin:$PATH
-alias bmake="bmake -m ~/.os161-toolchain/share/mk"
-alias drush="/Applications/MAMP/htdocs/co-op/vendor/bin/drush"
-export PATH=${PATH}:/Applications/MAMP/Library/bin:~/.local/bin
-alias ec2="ssh -i ~/Downloads/realmac0s.pem ubuntu@ec2-18-234-168-78.compute-1.amazonaws.com"
+alias gcp='(){ ga . && gc -m $1 && gp;}'
+alias ipad='uxplay'
+#alias idea='idea &>/dev/null &'                                                                                                       
 alias untar="tar -xvf"
+alias gcl="git clone"
+alias gpl="git pull"
+alias powerup=cpupower frequency-set -g performance
+alias powerdown=cpupower frequency-set -g ondemand
+alias xmon="micro ~/.xmonad/xmonad.hs"
+alias xmob="micro ~/.config/xmobar/xmobarrc0 ~/.config/xmobar/xmobarrc1"
+alias mkcd='(){ mkdir -p "$@" && cd "$@"; }'
+alias outlook='prospect-mail'
+alias logout="sudo pkill -u ${USER}"
+alias lock="gnome-screensaver-command -l"
+# Some tmux-related shell aliases
+
+# Attaches tmux to the last session; creates a new session if none exists.
+alias t='tmux attach || tmux new-session'
+
+# Attaches tmux to a session (example: ta portal)
+alias ta='tmux attach -t'
+
+# Creates a new session
+alias tn='tmux new-session'
+
+# Lists all ongoing sessions
+alias tl='tmux list-sessions'
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+# export http_proxy=127.0.0.1:8080
+# export https_proxy=127.0.0.1:8080
+
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+export HOMEBREW_GITHUB_API_TOKEN=0312b1dc485d74235941668a84fa77fdf3ea5163
+
+export PROMPT='${ret_status} %{$fg[magenta]%}%c%{$reset_color%} $(git_super_status) %% '
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/shrey/.local/bin:/home/shrey/.fzf/bin:/home/shrey/.cargo/bin
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/Tools/idea-IU-201.8538.31/bin:$PATH:$HOME/UxPlay-master/build"
+export PATH=~/.npm-global/bin:$PATH
+export PATH=$PATH:"/usr/local/go/bin":"$HOME/bin"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export TERM=xterm-256color
+fpath+=${ZDOTDIR:-~}/.zsh_functions
