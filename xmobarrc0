@@ -1,0 +1,51 @@
+Config { font    = "xft:MesloLGS NF:size=10"
+       , additionalFonts = [ "xft:mononoki:pixelsize=11:antialias=true:hinting=true"
+                           , "xft:mononoki:pixelsize=16:antialias=true:hinting=true"
+                           , "xft:Font Awesome 5 Free Solid:pixelsize=13"
+						   , "xft:FontAwesome:pixelsize=16"
+                           ]
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = False
+       , overrideRedirect = True
+       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Network "eth0" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Network "eth1" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Swap [] 10
+                    , Run Com "whoami" [] "" 36000
+                    , Run Com "hostname" [] "" 36000
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Volume "default" "Master" [] 10
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template =" <action=`xdotool key control+alt+g`>\
+       				\<icon=haskell_20.xpm/> </action>\
+       				\<fc=#666666>  |</fc> %UnsafeStdinReader% }{ \
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#b3afc2><fn=4></fn>%whoami%@%hostname% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#ecbe7b> %cpu% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#ff6c6b> %memory% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#46d9ff> %date%  </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc> %default:Master%"
+       }
