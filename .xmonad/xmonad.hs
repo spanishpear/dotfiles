@@ -104,7 +104,7 @@ myTerminal :: String
 myTerminal = "alacritty"   -- Sets default terminal
 
 mySpacingConst :: Integer
-mySpacingConst = 1
+mySpacingConst = 8
 
 myBrowser :: String
 --myBrowser = myTerminal ++ " -e lynx "  -- Sets lynx as browser for tree select
@@ -144,7 +144,7 @@ myStartupHook = do
           -- spawnToWorkspace "csesoc" "firefox"
           setWMName "LG3D"
           spawnOnce "gnome-screensaver &"
-          spawnOnce "startup_config"
+          spawnOnce "sss"
           spawnOnce "nitrogen --restore &"
           spawnOnce "compton &"
           -- spawn applications on certain desktops
@@ -532,7 +532,7 @@ myLogHook = fadeInactiveLogHook fadeAmount
 -- Makes setting the spacingRaw simpler to write. The spacingRaw
 -- module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border 0 0 0 0) False (Border 0 0 0 0) False
+mySpacing i = spacingRaw True (Border i i i i) True (Border i i i i ) True
 		
 
 -- Below is a variation of the above except no borders are applied

@@ -1,0 +1,50 @@
+Config { font    = "xft:MesloLGS NF:size=9.5"
+       , additionalFonts = [ "xft:mononoki:pixelsize=21:antialias=true:hinting=true"
+                           , "xft:mononoki:size=20:pixelsize=26:antialias=true:hinting=true"
+                           ]
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "#282c34"
+       , fgColor = "#ff6c6b"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "sp"
+       , allDesktops = False
+       , overrideRedirect = True
+       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Network "eth0" ["-L","0","-H","32",
+                                          "--normal","green","--high","red", "--normal", "green"] 10
+                    , Run Network "eth1" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Cpu ["-t","<fn=4></fn> cpu: (<total>%)", "-L", "5" , "-H", "50", "--low", "lightblue", "--normal","green","--high", "red"] 10
+                    , Run DiskU [("/", "<fn=4>\xe240</fn> sdd: <free> free")] [] 60
+                    , Run Memory ["-t","Mem: <used>M (<usedratio>%)"] 10
+                    , Run Swap [] 10
+                    , Run Com "whoami" [] "" 36000
+                    , Run Com "hostname" [] "" 36000
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Volume "default" "Master" [] 10
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template =" <action=`xdotool key control+alt+g`>\
+       				\<icon=haskell_20.xpm/> </action>\
+       				\<fc=#666666>  |</fc> %UnsafeStdinReader% }{ \
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#b3afc2><fn=4></fn>%whoami%@%hostname% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#ecbe7b> %cpu% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#51afef> %disku% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#cba3d9> %memory% </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#8d76c4> %date%  </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#ffffff> %default:Master%</fc>"
+       }
