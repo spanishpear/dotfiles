@@ -27,12 +27,12 @@ Config { font    = "xft:MesloLGS NF:size=9.5"
                     , Run Network "eth1" ["-L","0","-H","32",
                                           "--normal","green","--high","red"] 10
                     , Run Cpu ["-t","<fn=4></fn> cpu: (<total>%)", "-L", "5" , "-H", "50", "--low", "lightblue", "--normal","green","--high", "red"] 10
-                    , Run DiskU [("/", "<fn=4>\xe240</fn> sdd: <free> free")] [] 60
+                    , Run DiskU [("/", "<fn=4>\xe240</fn> /dev/nvme0n1p9: <free> free")] [] 60
                     , Run Memory ["-t","Mem: <used>M (<usedratio>%)"] 10
                     , Run Swap [] 10
                     , Run Com "whoami" [] "" 36000
                     , Run Com "hostname" [] "" 36000
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Date "%a %b %_d %Y %r" "date" 10
                     , Run Volume "default" "Master" [] 10
                     , Run UnsafeStdinReader
                     ]
