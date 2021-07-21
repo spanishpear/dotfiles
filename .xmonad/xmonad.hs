@@ -149,7 +149,6 @@ myStartupHook = do
           spawnOnce "sss"
           spawnOnce "nitrogen --restore &"
           spawnOnce "compton &"
-     	  spawnOnce "~/bin/scripts/startup_config"
           -- spawn applications on certain desktops
 
           -- spawnOnOnce "chat" "caprine" 
@@ -189,137 +188,6 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
                    , gs_originFractY = 0.5
                    , gs_font         = myFont
                    }
-
--- The lists below are actually 3-tuples for use with gridSelect and treeSelect.
--- TreeSelect uses all three values in the 3-tuples but GridSelect only needs first
--- two values in each list (see myAppGrid, myBookmarkGrid and myConfigGrid below).
-myApplications :: [(String, String, String)]
-myApplications = [ ("Slack", "slack", "online communication tool")
-                 , ("Outlook", "prospect-mail", "emails")
-                 , ("Emacs", "emacs", "Much more than a text editor")
-                 , ("Firefox", "firefox", "The famous open source web browser")
-                 , ("Geany", "geany", "A nice text editor")
-                 , ("Geary", "geary", "Email client that is attractive")
-                 , ("Gimp", "gimp", "Open source alternative to Photoshop")
-                 , ("Kdenlive", "kdenlive", "A great open source video editor")
-                 , ("LibreOffice Impress", "loimpress", "For making presentations")
-                 , ("LibreOffice Writer", "lowriter", "A fully featured word processor")
-                 , ("OBS", "obs", "Open broadcaster software")
-                 , ("PCManFM", "pcmanfm", "Lightweight graphical file manager")
-                 , ("Simple Terminal", "st", "Suckless simple terminal")
-                 , ("Steam", "steam", "Proprietary gaming platform")
-                 , ("Surf Browser", "surf suckless.org", "Suckless surf web browser")
-                 , ("Xonotic", "xonotic-glx", "A fast-paced first person shooter")
-                 ]
-
-myBookmarks :: [(String, String, String)]
-myBookmarks = [ ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              , ("Site Name", myBrowser ++ "https://www.distrotube.com", "Official website for DistroTube")
-              ]
-
-myConfigs :: [(String, String, String)]
-myConfigs = [ ("zshrc", myEditor ++ "/home/shrey/.zshrc", "zsh shell")
-            , ("doom emacs config.el", myEditor ++ "/home/dt/.doom.d/config.el", "doom emacs config")
-            , ("doom emacs init.el", myEditor ++ "/home/dt/.doom.d/init.el", "doom emacs init")
-            , ("dwm", myEditor ++ "/home/dt/dwm-distrotube/config.h", "dwm config file")
-            , ("qtile", myEditor ++ "/home/dt/.config/qtile/config.py", "qtile config")
-            , ("xmonad.hs", myEditor ++ "/home/shrey/.xmonad/xmonad.hs", "xmonad config")
-            , ("zshrc", myEditor ++ "/home/shrey/.zshrc", "config for the z shell")
-            ]
-
--- Let's take myApplications, myBookmarks and myConfigs and take only
--- the first two values from those 3-tuples (for GridSelect).
-myAppGrid :: [(String, String)]
-myAppGrid = [ (a,b) | (a,b,c) <- xs]
-  where xs = myApplications
-
-myBookmarkGrid :: [(String, String)]
-myBookmarkGrid = [ (a,b) | (a,b,c) <- xs]
-  where xs = myBookmarks
-
-myConfigGrid :: [(String, String)]
-myConfigGrid = [ (a,b) | (a,b,c) <- xs]
-  where xs = myConfigs
-
-------------------------------------------------------------------------
--- TREE SELECT
-------------------------------------------------------------------------
--- TreeSelect displays your workspaces or actions in a Tree-like format.
--- You can select desired workspace/action with the cursor or hjkl keys.
-
-treeselectAction :: TS.TSConfig (X ()) -> X ()
-treeselectAction a = TS.treeselectAction a
-   [ Node (TS.TSNode "applications" "a list of programs I use often" (return ()))
-     [Node (TS.TSNode (TE.fst3 $ myApplications !! n)
-                      (TE.thd3 $ myApplications !! n)
-                      (spawn $ TE.snd3 $ myApplications !! n)
-           ) [] | n <- [0..(length myApplications - 1)]
-     ]
-   , Node (TS.TSNode "bookmarks" "a list of web bookmarks" (return ()))
-     [Node (TS.TSNode(TE.fst3 $ myBookmarks !! n)
-                     (TE.thd3 $ myBookmarks !! n)
-                     (spawn $ TE.snd3 $ myBookmarks !! n)
-           ) [] | n <- [0..(length myBookmarks - 1)]
-     ]
-   , Node (TS.TSNode "config files" "config files that edit often" (return ()))
-     [Node (TS.TSNode (TE.fst3 $ myConfigs !! n)
-                      (TE.thd3 $ myConfigs !! n)
-                      (spawn $ TE.snd3 $ myConfigs !! n)
-           ) [] | n <- [0..(length myConfigs - 1)]
-     ]
-   ]
-
--- Configuration options for treeSelect
-tsDefaultConfig :: TS.TSConfig a
-tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
-                              , TS.ts_background   = 0xdd292d3e
-                              , TS.ts_font         = myFont
-                              , TS.ts_node         = (0xffd0d0d0, 0xff202331)
-                              , TS.ts_nodealt      = (0xffd0d0d0, 0xff292d3e)
-                              , TS.ts_highlight    = (0xffffffff, 0xff755999)
-                              , TS.ts_extra        = 0xffd0d0d0
-                              , TS.ts_node_width   = 200
-                              , TS.ts_node_height  = 20
-                              , TS.ts_originX      = 0
-                              , TS.ts_originY      = 0
-                              , TS.ts_indent       = 80
-                              , TS.ts_navigate     = myTreeNavigation
-                              }
-
--- Keybindings for treeSelect menus. Use h-j-k-l to navigate.
--- Use 'o' and 'i' to move forward/back in the workspace history.
--- Single KEY's are for top-level nodes. SUPER+KEY are for the
--- second-level nodes. SUPER+ALT+KEY are third-level nodes.
-myTreeNavigation = M.fromList
-    [ ((0, xK_Escape),   TS.cancel)
-    , ((0, xK_Return),   TS.select)
-    , ((0, xK_space),    TS.select)
-    , ((0, xK_Up),       TS.movePrev)
-    , ((0, xK_Down),     TS.moveNext)
-    , ((0, xK_Left),     TS.moveParent)
-    , ((0, xK_Right),    TS.moveChild)
-    , ((0, xK_k),        TS.movePrev)
-    , ((0, xK_j),        TS.moveNext)
-    , ((0, xK_h),        TS.moveParent)
-    , ((0, xK_l),        TS.moveChild)
-    , ((0, xK_o),        TS.moveHistBack)
-    , ((0, xK_i),        TS.moveHistForward)
-    ]
 
 
 ------------------------------------------------------------------------
@@ -387,7 +255,6 @@ myLogHook = fadeInactiveLogHook fadeAmount
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
-		
 
 -- Below is a variation of the above except no borders are applied
 -- if fewer than two windows. So a single window has no gaps.
@@ -485,27 +352,21 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
 -- Allows to have several floating scratchpads running different applications.
 -- Import Util.NamedScratchpad.  Bind a key to namedScratchpadSpawnAction.
 myScratchPads :: [NamedScratchpad]
-myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-                , NS "mocp" spawnMocp findMocp manageMocp
+myScratchPads = [ NS "discord" "discord" (className =? "discord") discordHook
+                , NS "spotify" "discord" (className =? "Spotify") spotifyHook
+                , NS "teams" "teams" (className =? "Microsoft Teams - Preview") teamsHook
+                , NS "slack" "slack" (className=? "Slack") teamsHook
                 ]
-  where
-    spawnTerm  = myTerminal ++ " -n scratchpad"
-    findTerm   = resource =? "scratchpad"
-    manageTerm = customFloating $ W.RationalRect l t w h
-               where
-                 h = 0.9
-                 w = 0.9
-                 t = 0.95 -h
-                 l = 0.95 -w
-    spawnMocp  = myTerminal ++ " -n mocp 'mocp'"
-    findMocp   = resource =? "mocp"
-    manageMocp = customFloating $ W.RationalRect l t w h
-               where
-                 h = 0.9
-                 w = 0.9
-                 t = 0.95 -h
-                 l = 0.95 -w
+  where discordHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
+        spotifyHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
+        teamsHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
+        slackHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
+        rr = W.RationalRect
 
+
+toggleFloat w = windows (\s -> if M.member w (W.floating s)
+                            then W.sink w s
+                            else (W.float w (W.RationalRect (1/10)  (1/10) (8/10) (8/10)) s))
 ------------------------------------------------------------------------
 -- KEYBINDINGS
 ------------------------------------------------------------------------
@@ -522,29 +383,22 @@ myKeys =
         , ("M-<Return>", spawn myTerminal)
 
     -- Run Prompt
-        , ("M-S-<Return>", spawn "my_rofi")   -- app search bar
-		, ("M-S-f", spawn "my_dmenufm" )
-		, ("M-S-p", spawn "power")
-		
+        , ("M-<Space>", spawn "my_rofi")   -- app search bar
+        , ("M-S-f", spawn "my_dmenufm" )
+        , ("M-S-p", spawn "power")
+        
     -- Windows
         , ("M-S-c", kill1)                           -- Kill the currently focused client
         , ("M-S-a", killAll)  
 
     -- Floating windows
-        , ("M-f", sendMessage (T.Toggle "floats"))       -- Toggles my 'floats' layout
+        , ("M-f", withFocused toggleFloat)      -- Toggles my 'floats' layout
         , ("M-<Delete>", withFocused $ windows . W.sink) -- Push floating window back to tile
         , ("M-S-<Delete>", sinkAll)                      -- Push ALL floating windows to tile
 
     -- Grid Select (CTRL-g followed by a key)
-        , ("C-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
-        , ("C-g m", spawnSelected' myBookmarkGrid)            -- grid select some bookmarks
-        , ("C-g c", spawnSelected' myConfigGrid)              -- grid select useful config files
         , ("C-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
         , ("C-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
-
-    -- Tree Select/
-        -- tree select actions menu
-        -- , ("C-t a", treeselectAction tsDefaultConfig)
 
     -- Windows navigation
         , ("M-m", windows W.focusMaster)     -- Move focus to the master window
@@ -562,8 +416,8 @@ myKeys =
         , ("M-<Tab>", sendMessage NextLayout)                -- Switch to next layout
         , ("M-C-M1-<Up>", sendMessage Arrange)
         , ("M-C-M1-<Down>", sendMessage DeArrange)
-        , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
-        , ("M-S-<Space>", sendMessage ToggleStruts)         -- Toggles struts
+        , ("M-S-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
+        -- , ("M-S-<Space>", sendMessage ToggleStruts)         -- Toggles struts
         , ("M-S-n", sendMessage $ MT.Toggle NOBORDERS)      -- Toggles noborder
         , ("M-<KP_Multiply>", sendMessage (IncMasterN 1))   -- Increase number of clients in master pane
         , ("M-<KP_Divide>", sendMessage (IncMasterN (-1)))  -- Decrease number of clients in master pane
@@ -582,9 +436,9 @@ myKeys =
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
 
     -- Scratchpads
-        , ("M-C-<Return>", namedScratchpadAction myScratchPads "terminal")
-        , ("M-C-c", namedScratchpadAction myScratchPads "mocp")
-
+        
+        , ("M-d", namedScratchpadAction myScratchPads "discord")
+        , ("M-t", namedScratchpadAction myScratchPads "teams")
     -- Controls for media player.
         , ("M-u p", spawn "playerctl play-pause")
         , ("M-u l", spawn "playerctl next")
