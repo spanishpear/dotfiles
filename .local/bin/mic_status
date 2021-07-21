@@ -1,0 +1,8 @@
+#!/bin/sh
+mic_id=`pactl list sources | tac | sed '1,/Active Port: analog-input-internal-mic/d' | egrep 'Source #[0-9]+' | head -1 | sed -E 's/^[^#]*#([0-9]+).*$/\1/'`
+
+if pactl list sources | sed "1,/Source #$mic_id/d" | grep "Mute: " | sed 's/^.*: //' | grep -q 'yes'; then
+	echo '<fc=#ff0000>[off]</fc>'
+else
+	echo '<fc=#00ff00>[hot]</fc>'
+fi

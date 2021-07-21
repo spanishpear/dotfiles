@@ -1,0 +1,16 @@
+#!/bin/bash
+# /bin/bash for `echo -e`
+
+# % nmcli con show --active
+# NAME                UUID                                  TYPE      DEVICE
+# Wired connection 1  86b2a7b4-f48a-3da5-991c-9ee0ea9691b7  ethernet  eno1
+# zac@home            62cae18c-0b64-4e3c-93e8-fadea7514169  wifi      wlp4s0
+
+# i honestly deserve to be imprisoned for this...
+device=`nmcli con show --active | rev | awk '$2 == "tenrehte" {print $1}' | rev`;
+
+if [ -n "$device" ]; then
+	echo -e "<fc=#00ff00>\uf700 $device</fc>";
+else
+	echo -e '<fc=#ff0000>\uf701</fc>';
+fi

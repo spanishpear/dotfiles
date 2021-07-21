@@ -1,0 +1,5 @@
+#!/bin/sh
+mic_id=`pactl list sources | tac | sed '1,/Active Port: analog-input-internal-mic/d' | egrep 'Source #[0-9]+' | head -1 | sed -E 's/^[^#]*#([0-9]+).*$/\1/'`
+
+pactl set-source-mute "$mic_id" toggle
+

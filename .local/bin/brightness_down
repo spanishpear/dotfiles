@@ -1,0 +1,3 @@
+#!/bin/sh
+
+flock /home/shrey/.local/etc/brightness/brightness_lock '/home/shrey/.local/bin/brightness_down_locked'
