@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case `lux -g` in
+	1|2|3)
+		sub=1
+		;;
+	5|10|15|20|25)
+		sub=2
+		;;
+	8|13|18|23)
+		sub=3
+		;;
+	*)
+		sub=25
+		;;
+esac
+
+while [ "$sub" -gt 0 ] ; do
+	lux -s 1 >/dev/null
+	sub=$((sub - 1))
+done
+

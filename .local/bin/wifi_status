@@ -1,0 +1,33 @@
+#!/bin/bash
+# /bin/bash for `echo -e`
+
+# % nmcli dev wifi list
+# IN-USE  BSSID              SSID                 MODE   CHAN  RATE        SIGNAL  BARS  SECURI>
+#         A8:5E:45:FD:0D:E8  zac@home 2.4         Infra  11    270 Mbit/s  100     ▂▄▆█  WPA2  >
+# *       A8:5E:45:FD:0D:EC  zac@home             Infra  149   270 Mbit/s  80      ▂▄▆_  WPA2  >
+#         B0:38:29:29:C7:F0  Omni10_Setup_7F0     Infra  11    65 Mbit/s   70      ▂▄▆_  --    >
+#         5C:B1:3E:A2:50:87  Optus_A25085         Infra  11    195 Mbit/s  39      ▂▄__  WPA2  >
+#         5C:B1:3E:A2:50:88  Optus_A25085         Infra  36    540 Mbit/s  39      ▂▄__  WPA2  >
+#         E4:F4:C6:17:AD:42  oz@mancave           Infra  3     195 Mbit/s  37      ▂▄__  WPA2  >
+#         A0:04:60:EA:ED:24  ARLO_VMB_1565660709  Infra  6     54 Mbit/s   32      ▂▄__  WPA2  >
+
+network=`nmcli dev wifi list | grep '^\*' | awk '{print $3 " " $9 " " $8}'`;
+if [ -n "$network" ]; then
+	name=`  echo "$network" | cut -d' ' -f1`;
+	bars=`  echo "$network" | cut -d' ' -f2`;
+	signal=`echo "$network" | cut -d' ' -f3`;
+	if [ "$signal" -ge 80 ]; then
+		color='00ff00';
+	elif [ "$signal" -ge 50 ]; then
+		color='ffff00';
+	elif [ "$signal" -ge 30 ]; then
+		color='ff8000';
+	else
+		color='ff0000';
+	fi
+
+	echo "$name <fc=#$color>$bars</fc>";
+else
+	echo -e '<fc=#ff0000>\ufaa9</fc>'
+fi
+

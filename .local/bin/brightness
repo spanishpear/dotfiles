@@ -1,0 +1,2 @@
+#!/bin/sh
+expr `lux -g` \* 2 / 5 | sed 's/$/%/'

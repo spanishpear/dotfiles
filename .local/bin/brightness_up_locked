@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case `lux -g` in
+	0|1|2)
+		add=1
+		;;
+	5|10|15|20)
+		add=3
+		;;
+	3|8|13|18|23)
+		add=2
+		;;
+	*)
+		add=25
+		;;
+esac
+
+# lux -M 250 -a $add
+
+while [ "$add" -gt 0 ] ; do
+	lux -M 250 -a 1 >/dev/null
+	add=$((add - 1))
+done
