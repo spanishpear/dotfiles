@@ -435,7 +435,7 @@ myKeys =
         , ("M-b", spawn "firefox")
         , ("M-g", bringSelected $ mygridConfig myColorizer)
         , ("M-n", moveToNSP) -- withFocused $ xReturn . (void <$> runQuery $ doShift "NSP"))
-        , ("M-w", makeWorkspace dtXPConfig "" >> swapWith Prev AnyWS)
+        -- , ("M-w", makeWorkspace dtXPConfig "" >> swapWith Prev AnyWS)
         , ("M-S-w", removeEmptyWorkspace)
         , ("M-S-<Delete>", spawn "shutdown now")
 
@@ -468,7 +468,7 @@ myKeys =
         , ("M-<KP_Divide>", sendMessage (IncMasterN (-1)))  -- Decrease number of clients in master pane
         , ("M-S-<KP_Multiply>", increaseLimit)              -- Increase number of windows
         , ("M-S-<KP_Divide>", decreaseLimit)                -- Decrease number of windows
-
+		, ("M-S-s", spawn "flameshot gui")
         , ("M-h", sendMessage Shrink)                       -- Shrink horiz window width
         , ("M-l", sendMessage Expand)                       -- Expand horiz window width
         , ("M-S-h", foldr1 (>>) (replicate 4 (sendMessage Shrink))) -- Shrink horiz window width
