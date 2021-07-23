@@ -25,6 +25,33 @@ call plug#begin("~/.config/nvim/plugged")
 
   " auto pair brackets n stuff
   Plug 'jiangmiao/auto-pairs'
+
+  
+  " statusline
+  
+  Plug 'itchyny/lightline.vim'
+  " Lightline
+  let g:lightline = {
+    \     'colorscheme': 'powerlineish',
+    \     'active': {
+    \         'left': [['mode', 'paste' ], ['readonly', 'filename', 'modified']],
+    \         'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding']]
+    \     }
+  \ }
+
+  "Linting
+  Plug 'w0rp/ale'
+  
+  " Plugin for Sytnax Highlighting
+  Plug 'sheerun/vim-polyglot'
+  
+  " JSX
+  Plug 'MaxMEllon/vim-jsx-pretty' 
+  "coc plugins
+  "coc-tsserver coc-eslint coc-json coc-prettier coc-css
+
+
+  Plug 'maxmellon/vim-jsx-pretty'
   "LazyGit
   "Telescope
   "Fugitive
@@ -33,4 +60,13 @@ call plug#begin("~/.config/nvim/plugged")
 
 call plug#end()
 " Everything after this line will be the config section
+
+
+nnoremap <A-Up> :m-2<CR>
+nnoremap <A-Down> :m+<CR>
+
+augroup filetype_jsx
+  autocmd!
+  autocmd FileType javascript set filetype=javascriptreact
+augroup END
 
