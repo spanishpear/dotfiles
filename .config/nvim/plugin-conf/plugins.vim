@@ -26,7 +26,9 @@ call plug#begin("~/.config/nvim/plugged")
   " auto pair brackets n stuff
   Plug 'jiangmiao/auto-pairs'
 
-  
+  " starter screen
+  Plug 'mhinz/vim-startify'
+
   " statusline
   
   Plug 'itchyny/lightline.vim'
@@ -61,6 +63,15 @@ call plug#begin("~/.config/nvim/plugged")
 call plug#end()
 " Everything after this line will be the config section
 
+source $HOME/.config/nvim/plugin-conf/ALE.vim
+source $HOME/.config/nvim/plugin-conf/barbar.vim
+source $HOME/.config/nvim/plugin-conf/coc.vim
+source $HOME/.config/nvim/plugin-conf/fzf.vim
+source $HOME/.config/nvim/plugin-conf/nvim-tree.vim
+source $HOME/.config/nvim/plugin-conf/git-gutter.vim
+
+source $HOME/.config/nvim/plugin-conf/startify.vim
+
 
 nnoremap <A-Up> :m-2<CR>
 nnoremap <A-Down> :m+<CR>
@@ -70,3 +81,4 @@ augroup filetype_jsx
   autocmd FileType javascript set filetype=javascriptreact
 augroup END
 
+source 

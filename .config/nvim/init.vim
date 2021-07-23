@@ -1,6 +1,5 @@
 "loads the luafile
-luafile $HOME/.config/nvim/lua/init.lua
-luafile $HOME/.config/nvim/lua/tree.lua
+lua require('tree');
 " Everything after this line will be the config section
 source $HOME/.config/nvim/plugin-conf/plugins.vim
 " setup the colour schemes
@@ -9,6 +8,7 @@ if (has("termguicolors"))
 endif
 set background=dark
 colorscheme dracula
+
 
 " set line numbers to be on
 set number
@@ -21,7 +21,4 @@ set updatetime=100
 " set mouse to be on
 set mouse=a
 
-source $HOME/.config/nvim/plugin-conf/nvim-tree.vim
-"source $HOME/.config/nvim/plugin-conf/git-gutter.vim
-source $HOME/.config/nvim/plugin-conf/fzf.vim
 
