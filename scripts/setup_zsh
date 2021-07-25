@@ -1,4 +1,5 @@
-#!/bin.bash
+# vim: set filetype=sh :
+#!/bin/bash
 sudo apt install zsh
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k

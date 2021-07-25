@@ -61,6 +61,7 @@ do
 	
 done
 
+sudo apt-get install ffmpeg
 
 fc-cache -fv
 
