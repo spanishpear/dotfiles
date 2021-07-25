@@ -389,6 +389,7 @@ myKeys =
         
     -- Windows
         , ("M-S-c", kill1)                           -- Kill the currently focused client
+        , ("M-z", kill1)
         , ("M-S-a", killAll)  
 
     -- Floating windows
@@ -436,9 +437,9 @@ myKeys =
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
 
     -- Scratchpads
-        
         , ("M-d", namedScratchpadAction myScratchPads "discord")
         , ("M-t", namedScratchpadAction myScratchPads "teams")
+        , ("M-s", namedScratchpadAction myScratchPads "slack")
     -- Controls for media player.
         , ("M-u p", spawn "playerctl play-pause")
         , ("M-u l", spawn "playerctl next")
