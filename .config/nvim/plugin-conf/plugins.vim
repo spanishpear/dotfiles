@@ -59,6 +59,7 @@ call plug#begin("~/.config/nvim/plugged")
   "Fugitive
   "CocGit
   "WHICH TO USE WTF
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
 " Everything after this line will be the config section
