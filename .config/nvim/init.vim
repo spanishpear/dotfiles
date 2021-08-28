@@ -13,6 +13,11 @@ colorscheme dracula
 " set line numbers to be on
 set number
 
+" vimwiki wants this 
+set nocompatible
+filetype plugin on
+syntax on
+
 " tabwidth for spaces
 set tabstop=2
 set shiftwidth=2

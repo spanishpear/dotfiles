@@ -41,6 +41,12 @@ call plug#begin("~/.config/nvim/plugged")
     \     }
   \ }
 
+  " For Git Commands 
+  Plug 'tpope/vim-fugitive'
+
+  " VimWiki
+  Plug 'vimwiki/vimwiki'
+  
   "Linting
   Plug 'w0rp/ale'
   
