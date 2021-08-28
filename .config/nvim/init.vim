@@ -13,6 +13,12 @@ colorscheme dracula
 " set line numbers to be on
 set number
 
+let mapleader = ","
+
+" ,q will close the current buffer
+nnoremap <leader>q :bd<Enter>
+
+
 " vimwiki wants this 
 set nocompatible
 filetype plugin on

@@ -2,14 +2,16 @@ let g:startify_session_dir = '~/.config/nvim/session'
 let g:startify_lists = [
           \ { 'type': 'files',     'header': ['   Files']            },
           \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-          \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ ]
 let g:startify_bookmarks = [
-            \ { 'x': '~/.xmonad/xmonad.hs' },
+            \ { 'p': '~/Documents/Projects/' },
             \ { 'i': '~/.config/nvim/init.vim' },
             \ { 'z': '~/.zshrc' },
-            \ { 'd': '~/Documents/Projects/dotfiles' }]
+            \ { 'd': '~/Documents/Projects/dotfiles' },
+            \ ]
+
 " https://www.chrisatmachine.com/Neovim/11-startify/
 let g:startify_session_autoload = 1
 let g:startify_session_delete_buffers = 1
