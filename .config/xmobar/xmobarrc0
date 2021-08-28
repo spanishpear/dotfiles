@@ -17,7 +17,7 @@ Config { font    = "xft:MesloLGS NF:size=9.5"
        , iconRoot = "sp"
        , allDesktops = False
        , overrideRedirect = True
-       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C",
+       , commands = [ Run Weather "YSSY" ["-t","<station>: <tempC>C",
                                           "-L","18","-H","25",
                                           "--normal","green",
                                           "--high","red",
@@ -46,5 +46,6 @@ Config { font    = "xft:MesloLGS NF:size=9.5"
        				\<fc=#666666><fn=2>|</fn></fc><fc=#51afef> %disku% </fc>\
        				\<fc=#666666><fn=2>|</fn></fc><fc=#cba3d9> %memory% </fc>\
        				\<fc=#666666><fn=2>|</fn></fc><fc=#8d76c4> %date%  </fc>\
+       				\<fc=#666666><fn=2>|</fn></fc><fc=#8d76c4> %YSSY%  </fc>\
        				\<fc=#666666><fn=2>|</fn></fc><fc=#ffffff> %default:Master%</fc>"
        }
