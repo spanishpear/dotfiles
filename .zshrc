@@ -138,6 +138,9 @@ alias mkcd='(){ mkdir -p "$@" && cd "$@"; }'
 alias outlook='prospect-mail'
 alias logout="sudo pkill -u ${USER}"
 alias lock="gnome-screensaver-command -l"
+alias class="ssh cse -Y -t '~/bin/class'"
+alias csec="ssh cse -t"
+alias ins="sudo apt install -y"
 # Some tmux-related shell aliases
 
 # Attaches tmux to the last session; creates a new session if none exists.
@@ -152,7 +155,7 @@ alias tn='tmux new-session'
 # Lists all ongoing sessions
 alias tl='tmux list-sessions'
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
+alias cr="cargo run"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
@@ -169,9 +172,10 @@ export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/Tools/idea-IU-201.8538.31/b
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$PATH:"/usr/local/go/bin":"$HOME/bin"
 
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export TERM=xterm-256color
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
+eval $(thefuck --alias)

@@ -127,6 +127,7 @@ myStartupHook :: X ()
 myStartupHook = do
           setWMName "LG3D"
           spawnOnce "nitrogen --restore &"
+          spawnOnce "xmodmap ~/.Xmodmap"
 
 
 
@@ -406,6 +407,7 @@ myKeys =
 
     -- Run Prompt
         , ("M-<Space>", spawn "/home/shrey/.config/rofi/launchers/ribbon/launcher.sh")   -- app search bar
+        , ("M-S-p", spawn "power")
 
     -- Windows
         , ("M-z", kill1)                           -- Kill the currently focused client
