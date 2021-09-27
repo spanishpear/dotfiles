@@ -13,8 +13,11 @@ call plug#begin("~/.config/nvim/plugged")
   " File Explorer
   Plug 'kyazdani42/nvim-tree.lua'
   Plug 'kyazdani42/nvim-web-devicons' " for file icons  
+ 
+  " highlight yanks
+  Plug 'machakann/vim-highlitedyank'
   
-  " Tab Bar
+  "Tab Bar
   Plug 'romgrk/barbar.nvim'
 
   " Git in side

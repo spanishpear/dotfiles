@@ -16,13 +16,17 @@ set number
 let mapleader = ","
 
 " ,q will close the current buffer
-nnoremap <leader>q :bd<Enter>
+nnoremap <leader>q :bd!<Enter>
 
 
 " vimwiki wants this 
 set nocompatible
 filetype plugin on
 syntax on
+
+" map esc + esc to exit terminal
+tnoremap <C-Q> <C-\><C-N>
+
 
 " tabwidth for spaces
 set tabstop=2
@@ -32,4 +36,8 @@ set updatetime=100
 " set mouse to be on
 set mouse=a
 
+"keep terminals open?
+set hidden
 
+"set rust filetype
+autocmd BufNewFile,BufRead *.rs set filetype=rust

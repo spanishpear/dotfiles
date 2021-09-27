@@ -1,3 +1,5 @@
 {
-    "hover.target": "echo"
+    "hover.target": "echo",
+    "rust-analyzer.diagnostics.disabled": ["incorrect-ident-case"]
 }
+
