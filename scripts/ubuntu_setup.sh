@@ -61,8 +61,10 @@ do
 	
 done
 
-sudo apt-get install ffmpeg
+sudo apt-get install ffmpeg xdotool
 
 fc-cache -fv
 
 echo "[-] 
+
+//TODO - symlinks for alacritty, xmonad, etc
