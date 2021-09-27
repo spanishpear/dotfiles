@@ -443,7 +443,7 @@ myKeys =
     -- Controls for media player.
         , ("M-u p", spawn "playerctl play-pause")
         , ("M-u l", spawn "playerctl next")
-        , ("M-u h", spawn "playerctl prev")
+        , ("M-u h", spawn "playerctl previous")
         , ("M-u <Space>", spawn "playerctl play")
         , ("M-S-s", spawn "flameshot gui")
 
