@@ -8,7 +8,8 @@ if (has("termguicolors"))
 endif
 set background=dark
 colorscheme dracula
-
+" try and make highlighted yank work
+highlight HighlightedyankRegion cterm=reverse gui=reverse
 
 " set line numbers to be on
 set number
@@ -16,7 +17,7 @@ set number
 let mapleader = ","
 
 " ,q will close the current buffer
-nnoremap <leader>q :bd!<Enter>
+nnoremap <leader>q :BufferClose!<Enter>
 
 
 " vimwiki wants this 
@@ -33,6 +34,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set updatetime=100
+set nowrap
+set foldmethod=syntax
 " set mouse to be on
 set mouse=a
 

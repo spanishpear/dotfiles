@@ -9,7 +9,6 @@ let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lin
 
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
-let g:ale_fix_on_save = 1
 
 nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
 

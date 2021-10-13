@@ -11,7 +11,7 @@ let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --ma
 " Remove node_modules and files in .gitignor
 let $FZF_DEFAULT_COMMAND = 'rg --files'
 
-nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <C-k> :Files<CR>
 nnoremap <silent> <C-f> :Rg<CR>
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 

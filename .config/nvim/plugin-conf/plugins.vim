@@ -15,7 +15,10 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'kyazdani42/nvim-web-devicons' " for file icons  
  
   " highlight yanks
-  Plug 'machakann/vim-highlitedyank'
+  Plug 'machakann/vim-highlightedyank'
+
+  "vim sessions
+  Plug 'tpope/vim-obsession'
   
   "Tab Bar
   Plug 'romgrk/barbar.nvim'
