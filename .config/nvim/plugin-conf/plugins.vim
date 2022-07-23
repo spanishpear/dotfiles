@@ -35,10 +35,11 @@ call plug#begin("~/.config/nvim/plugged")
   " starter screen
   Plug 'mhinz/vim-startify'
 
-  " statusline
-  
-  Plug 'itchyny/lightline.vim'
+  " copilot
+  Plug 'github/copilot.vim'
+
   " Lightline
+  Plug 'itchyny/lightline.vim'
   let g:lightline = {
     \     'colorscheme': 'powerlineish',
     \     'active': {
@@ -47,9 +48,15 @@ call plug#begin("~/.config/nvim/plugged")
     \     }
   \ }
 
+  " vim-rainbow brakcets
+  " Plug 'frazrepo/vim-rainbow'
+
   " For Git Commands 
   Plug 'tpope/vim-fugitive'
 
+  " Plug for rust 
+  Plug 'rust-lang/rust.vim'
+  
   " VimWiki
   Plug 'vimwiki/vimwiki'
   
@@ -73,6 +80,9 @@ call plug#begin("~/.config/nvim/plugged")
   "WHICH TO USE WTF
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+  "Vim github link
+  Plug 'knsh14/vim-github-link'
+  
 call plug#end()
 " Everything after this line will be the config section
 

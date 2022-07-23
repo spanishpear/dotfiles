@@ -1,4 +1,4 @@
-Config { font    = "xft:MesloLGS NF:size=9.5"
+Config { font    = "xft:MesloLGS NF:size=5.5"
        , additionalFonts = [ "xft:mononoki:pixelsize=21:antialias=true:hinting=true"
                            , "xft:mononoki:size=20:pixelsize=26:antialias=true:hinting=true"
                            ]
