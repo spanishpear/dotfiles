@@ -29,13 +29,14 @@ import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import qualified XMonad.Actions.Search as S
+import XMonad.Util.NamedWindows (getName)
 
     -- Data
 import Data.Char (isSpace)
 import Data.Monoid
 import Data.Maybe (isJust)
 import Data.Tree
-import qualified Data.Tuple.Extra as TE
+-- import qualified Data.Tuple.Extra as TE
 import qualified Data.Map as M
 
     -- Hooks
@@ -90,6 +91,11 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 import XMonad.Actions.SpawnOn
+
+import qualified DBus as D
+import qualified DBus.Client as D
+import qualified Codec.Binary.UTF8.String as UTF8
+
 ------------------------------------------------------------------------t
 -- VARIABLES
 ------------------------------------------------------------------------
@@ -113,11 +119,10 @@ myBrowser :: String
 myBrowser = myTerminal ++ " -e firefox "                 -- Sets firefox as browser for tree select
 
 myEditor :: String
-myEditor = myTerminal ++ "-e vim"  -- Sets emacs as editor for tree select
--- myEditor = myTerminal ++ " -e vim "    -- Sets vim as editor for tree select
+myEditor = myTerminal ++ "-e vim"  -- Sets vim as editor for tree select
 
 myBorderWidth :: Dimension
-myBorderWidth = 0          -- Sets border width for windows
+myBorderWidth = 2          -- Sets border width for windows
 
 myNormColor :: String
 myNormColor   = "#292d3e"  -- Border color of normal windows
@@ -131,6 +136,27 @@ altMask = mod1Mask         -- Setting this for use in xprompts
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
+-- colors
+fg        = "#ebdbb2"
+bg        = "#282828"
+gray      = "#a89984"
+bg1       = "#3c3836"
+bg2       = "#505050"
+bg3       = "#665c54"
+bg4       = "#7c6f64"
+
+green     = "#b8bb26"
+darkgreen = "#98971a"
+red       = "#fb4934"
+darkred   = "#cc241d"
+yellow    = "#fabd2f"
+blue      = "#83a598"
+purple    = "#d3869b"
+aqua      = "#8ec07c"
+white     = "#eeeeee"
+
+pur2      = "#5b51c9"
+blue2     = "#2266d0"
 ------------------------------------------------------------------------
 -- AUTOSTART
 ------------------------------------------------------------------------
@@ -149,6 +175,7 @@ myStartupHook = do
           spawnOnce "sss"
           spawnOnce "nitrogen --restore &"
           spawnOnce "compton &"
+          spawn "$HOME/.config/polybar/launch.sh"
           -- spawn applications on certain desktops
 
           -- spawnOnOnce "chat" "caprine" 
@@ -193,24 +220,12 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
 ------------------------------------------------------------------------
 -- WORKSPACES
 ------------------------------------------------------------------------
--- My workspaces are clickable meaning that the mouse can be used to switch
--- workspaces. This requires xdotool. You need to use UnsafeStdInReader instead
--- of simply StdInReader in xmobar config so you can pass actions to it.
-
-xmobarEscape :: String -> String
-xmobarEscape = concatMap doubleLts
-  where
-        doubleLts '<' = "<<"
-        doubleLts x   = [x]
 
 myWorkspaces :: [String]
-myWorkspaces = clickable . map xmobarEscape
-               $ ["dev", "www", "tutr", "uni", "blog", "chat", "mus", "vid", "csesoc"]
-  where
-        clickable l = [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>" |
-                      (i,ws) <- zip [1..9] l,
-                      let n = i ]
-
+myWorkspaces = clickable $ ["dev", "www", "tutr", "uni", "blog", "chat", "mus", "vid"]
+    where
+         clickable l = [ "%{A1:xdotool key super+" ++ show n ++ " &:}" ++ ws ++ "%{A}" |
+                            (i, ws) <- zip [1, 2, 3, 4, 5, 6, 7, 8, 0] l, let n = i ]
 ------------------------------------------------------------------------
 -- MANAGEHOOK
 ------------------------------------------------------------------------
@@ -238,15 +253,6 @@ myManageHook = composeAll
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      ] <+> namedScratchpadManageHook myScratchPads
 
-------------------------------------------------------------------------
--- LOGHOOK
-------------------------------------------------------------------------
--- Sets opacity for inactive (unfocused) windows. I prefer to not use
--- this feature so I've set opacity to 1.0. If you want opacity, set
--- this to a value of less than 1 (such as 0.9 for 90% opacity).
-myLogHook :: X ()
-myLogHook = fadeInactiveLogHook fadeAmount
-    where fadeAmount = 1
 
 ------------------------------------------------------------------------
 -- LAYOUTS
@@ -262,7 +268,7 @@ mySpacing' :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spac
 mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 
 
--- Defining a bunch of layouts, many that I don't use.
+-- Defining a bunch of layouts
 tall     = renamed [Replace "tall"]
            $ smartBorders
            $ addTabs shrinkText myTabTheme
@@ -467,10 +473,10 @@ myKeys =
 ------------------------------------------------------------------------
 main :: IO ()
 main = do
-    -- Launching three instances of xmobar on their monitors.
-    xmproc0 <- spawnPipe "/home/shrey/.local/bin/xmobar -x 0 /home/shrey/.config/xmobar/xmobarrc0"
-    xmproc1 <- spawnPipe "/home/shrey/.local/bin/xmobar -x 1 /home/shrey/.config/xmobar/xmobarrc1"
-    -- the xmonad, ya know...what the WM is named after!
+    dbus <- D.connectSession
+    D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
     xmonad $ ewmh def
         { manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageDocks 
         -- Run xmonad commands from command line with "xmonadctl command". Commands include:
@@ -489,16 +495,35 @@ main = do
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
-        , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        { ppOutput = \x -> hPutStrLn xmproc0 x  >> hPutStrLn xmproc1 x
-                        , ppCurrent = xmobarColor "#293BC4" "#A3BE8C" . wrap "[" "]" -- Current workspace in xmobar
-                        , ppVisible = xmobarColor "#c3e88d" ""                -- Visible but not current workspace
-                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""   -- Hidden workspaces in xmobar
-                        , ppHiddenNoWindows = xmobarColor "#cba3d9" ""        -- Hidden workspaces (no windows)
-                        , ppTitle = xmobarColor "#d0d0d0" "" . shorten 40     -- Title of active window in xmobar
-                        , ppSep =  "<fc=#666666> | </fc>"                     -- Separators in xmobar
-                        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"  -- Urgent workspace
-                        , ppExtras  = [windowCount]                           -- # of windows current workspace
-                        , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-                        }
+        , logHook = dynamicLogWithPP (myLogHook dbus)
         } `additionalKeysP` myKeys
+
+
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+    { ppOutput = dbusOutput dbus
+    , ppCurrent = wrap ("%{F" ++ blue2 ++ "} ") " %{F-}"
+    , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
+    , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+    , ppHidden = wrap " " " "
+    , ppWsSep = ""
+    , ppSep = " | "
+    , ppTitle = myAddSpaces 25
+    }
+
+-- Emit a DBus signal on log updates (polybar)
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
+
+myAddSpaces :: Int -> String -> String
+myAddSpaces len str = sstr ++ replicate (len - length sstr) ' '
+  where
+    sstr = shorten len str
