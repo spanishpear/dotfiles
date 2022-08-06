@@ -18,149 +18,131 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #222
-background-alt = #444
+background = #dd012d5e
+background-alt = #db7254
 ;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
+foreground = #fefefe
+foreground-alt = #ff856c
+i3 = #737c84
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
 [bar/mon1]
-monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:}
 width = 100%
-height = 25
-;offset-x = 0%
-;offset-y = 0%
-radius = 0.0
-fixed-center = true
-bottom = false
-enable-click = true
+height = 27
+radius = 10.0
+fixed-center = false
+override-redirect = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 4
+line-size = 3
 line-color = #f00
 
-border-size = 0
+border-size = 4
 border-color = #00000000
 
 padding-left = 0
-padding-right = 0
-
+padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 1
+module-margin-right = 2
 
-font-0 = misc fixed:pixelsize=12;1
-;font-1 = unifont:fontformat=truetype:size=12:antialias=false;0
-;font-2 = siji:pixelsize=12;1
-font-1 = "FontAwesome:size=12;1"
-modules-left = xmonad 
-modules-center = 
-modules-right = filesystem pulseaudio date
+;font-1 = Hack Nerd Font:pixelsize=10;1
+;font-0 = siji:pixelsize=10;1
+font-0 = Meslo LGS NF
 
-tray-position = right
-tray-padding = 2
-;tray-background = #0063ff
-tray-maxsize = 30
+modules-left = xmonad
+modules-center =
+modules-right = pulseaudio filesystem memory cpu wlan date
 
+; this is needed so that when we fullscreen on xmonad
+; the polybar dissapears 
 wm-restack = generic
-;wm-restack = i3
 
-override-redirect = true
-
-scroll-up = bspwm-desknext
-scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+tray-position = none
 
 cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/title]
+type = internal/xwindow
+format = <label>
+label = %title%
+
+format-foreground = ${colors.foreground-alt}
 
 [module/xmonad]
 type = custom/script
 exec = xmonad-log
-
 tail = true
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.i3}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
 
 [module/filesystem]
 type = internal/fs
 interval = 25
 
-mount-0 = /home
+mount-0 = /
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
+format-mounted = <label-mounted>
+format-mounted-prefix = " "
+format-mounted-prefix-foreground = ${colors.foreground-alt}
+label-mounted = %free%/%total%
 
-[module/ewmh]
-type = internal/xworkspaces
-
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-pin-workspaces = true
-
-; Create click handler used to focus desktop
-; Default: true
-enable-click = true
-
-; Create scroll handlers used to cycle desktops
-; Default: true
-enable-scroll = false
-
-; Reverse the scroll direction
-; Default: false
-; New in version 3.6.0
-reverse-scroll = true
-
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
+;label-unmounted = %mountpoint%: not mounted
+;label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
 label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
 label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = 
+interface = wlo1
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
 label-connected = %essid%
 
 format-disconnected =
@@ -169,54 +151,59 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-0 = " "
+ramp-signal-1 = " "
+ramp-signal-2 = " "
+ramp-signal-3 = " "
+ramp-signal-4 = " "
 ramp-signal-foreground = ${colors.foreground-alt}
 
-[module/eth]
+[module/eth0]
 type = internal/network
-interface = 
+interface = wlp3s0
 interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
+format-connected-prefix =
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
 format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/eth1]
+type = internal/network
+interface = wlo1
+interval = 3.0
+
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = "%Y-%m-%d"
-date-alt = " %Y-%m-%d"
+date =
+date-alt = " %Y/%m/%d"
 
-time = %I:%M
-time-alt = %I:%M
+time = %H:%M
+time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
 
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume>
+format-volume = <label-volume> <bar-volume>
 label-volume = VOL %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
-label-muted-foreground = #666
+label-muted = "  Muted "
+label-muted-foreground = ${colors.foreground-alt}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -228,39 +215,11 @@ bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
 bar-volume-indicator = |
-bar-volume-indicator-font = 2
+bar-volume-indicator-font = 1
 bar-volume-fill = ─
-bar-volume-fill-font = 2
+bar-volume-fill-font = 1
 bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
-
-[module/alsa]
-type = internal/alsa
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
+bar-volume-empty-font = 1
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/powermenu]
@@ -295,13 +254,13 @@ menu-2-1-exec = menu-open-0
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
-;compositing-background = screen
+compositing-background = screen
 ;compositing-foreground = source
 ;compositing-border = over
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 0
-margin-bottom = 0
+margin-top = 10
+margin-bottom = 10
 
 ; vim:ft=dosini

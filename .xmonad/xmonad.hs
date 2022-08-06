@@ -40,7 +40,7 @@ import Data.Tree
 import qualified Data.Map as M
 
     -- Hooks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicLog (dynamicLog, dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
@@ -505,6 +505,7 @@ myLogHook dbus = def
     , ppCurrent = wrap ("%{F" ++ blue2 ++ "} ") " %{F-}"
     , ppVisible = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
     , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+    , ppHiddenNoWindows = wrap ("%{F" ++ white ++ "} ") " %{F-}"
     , ppHidden = wrap " " " "
     , ppWsSep = ""
     , ppSep = " | "
