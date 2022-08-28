@@ -362,12 +362,14 @@ myScratchPads = [ NS "discord" "discord" (className =? "discord") discordHook
                 , NS "spotify" "discord" (className =? "Spotify") spotifyHook
                 , NS "teams" "teams" (className =? "Microsoft Teams - Preview") teamsHook
                 , NS "slack" "slack" (className=? "Slack") teamsHook
+                , NS "alacritty" ("alacritty --class ," ++ term_class) (className =? term_class) teamsHook 
                 ]
   where discordHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
         spotifyHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
         teamsHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
         slackHook = customFloating $ rr (1/10) (1/10) (8/10) (8/10)
         rr = W.RationalRect
+        term_class = "term_scratchpad"
 
 
 toggleFloat w = windows (\s -> if M.member w (W.floating s)
@@ -446,6 +448,7 @@ myKeys =
         , ("M-d", namedScratchpadAction myScratchPads "discord")
         , ("M-t", namedScratchpadAction myScratchPads "teams")
         , ("M-s", namedScratchpadAction myScratchPads "slack")
+        , ("M-S-<Return>", namedScratchpadAction myScratchPads "alacritty")
     -- Controls for media player.
         , ("M-u p", spawn "playerctl play-pause")
         , ("M-u l", spawn "playerctl next")
@@ -463,6 +466,12 @@ myKeys =
         , ("<XF86AudioLowerVolume>", spawn "media volume down")
         , ("<XF86AudioRaiseVolume>", spawn "media volume up")
         , ("<Print>", spawn "flameshot gui")
+        ]  
+        ++
+        -- better multi-monitor supprrt for mod{w,e,r} bindings
+        [ (mask ++ "M-" ++ [key], screenWorkspace scr >>= flip whenJust (windows . action))
+             | (key, scr)  <- zip "wer" [2,0,1] -- was [0..] *** change to match your screen order ***
+             , (action, mask) <- [ (W.view, "") , (W.shift, "S-")]
         ]
         -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "nsp"))
