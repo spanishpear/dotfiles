@@ -1,5 +1,5 @@
 rofi \
-	-modi combi,"CALC:qalc +u8 -nocurrencies",run,ssh \
+	-modi combi,run,ssh \
 	-show combi -combi-modi drun,ssh -show-icons \
 	-display-combi APPS \
 	-display-drun "$" \

@@ -141,6 +141,7 @@ alias lock="gnome-screensaver-command -l"
 alias class="ssh cse -Y -t '~/bin/class'"
 alias csec="ssh cse -t"
 alias ins="sudo apt install -y"
+alias wifi_connect="(){nmcli dev wifi connect '$1' password '$2'}"
 # Some tmux-related shell aliases
 
 # Attaches tmux to the last session; creates a new session if none exists.
@@ -179,3 +180,7 @@ export TERM=xterm-256color
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 eval $(thefuck --alias)
+
+# kill caps lock
+setxkbmap -option caps:swapescape
+xmodmap -e "remove lock = Caps_Lock"
