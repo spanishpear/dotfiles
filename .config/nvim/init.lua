@@ -11,6 +11,8 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
+  use 'airblade/vim-rooter'
+
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -84,6 +86,11 @@ require('packer').startup(function(use)
 
   -- for inlayhints, etc
   use 'simrat39/rust-tools.nvim'
+
+  use 'nvim-tree/nvim-web-devicons' 
+  
+  -- for tabs 
+  use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
 
   -- for file explorer
   use {

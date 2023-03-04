@@ -65,3 +65,7 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- copilot accept 
 vim.keymap.set('i', '<C-t>', 'copilot#Accept("")', { expr = true, silent = true })
+
+-- set relative number
+
+vim.wo.relativenumber = true

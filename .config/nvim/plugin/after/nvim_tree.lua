@@ -20,7 +20,12 @@ require'nvim-tree'.setup {
         },
       },
     }
-  }
+  },
+  respect_buf_cwd = true,
+  sync_root_with_cwd = false,
+  update_focused_file = {
+    enable = true,
+  },
 }
 
 
