@@ -113,7 +113,7 @@ label-urgent-padding = 2
 type = internal/fs
 interval = 25
 
-mount-0 = /
+mount-0 = /home
 
 format-mounted = <label-mounted>
 format-mounted-prefix = " "

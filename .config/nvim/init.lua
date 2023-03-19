@@ -52,6 +52,7 @@ require('packer').startup(function(use)
   }
 
   use 'tpope/vim-obsession'
+  use 'tpope/vim-surround'
 
   -- shows keybindings for the next key in a chord
   use {
