@@ -1,6 +1,6 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
-
+vim.cmd("au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.tera set ft=jinja")
 -- Set highlight on search
 vim.o.hlsearch = false
 

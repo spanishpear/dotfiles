@@ -92,6 +92,9 @@ require('packer').startup(function(use)
   -- for tabs 
   use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
 
+  -- jinja highlights
+  use 'lepture/vim-jinja'
+
   -- for file explorer
   use {
     'nvim-tree/nvim-tree.lua',
