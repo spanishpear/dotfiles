@@ -88,8 +88,10 @@ require('packer').startup(function(use)
   -- for inlayhints, etc
   use 'simrat39/rust-tools.nvim'
 
-  use 'nvim-tree/nvim-web-devicons' 
-  
+  use 'rust-lang/rust.vim'
+
+  use 'nvim-tree/nvim-web-devicons'
+
   -- for tabs 
   use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
 
