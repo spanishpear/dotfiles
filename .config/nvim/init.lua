@@ -106,6 +106,37 @@ require('packer').startup(function(use)
     },
   }
 
+  use {
+    'dhruvasagar/vim-prosession',
+    requires = {
+      'tpope/vim-obsession',
+    },
+  }
+
+  use {
+    'easymotion/vim-easymotion',
+  }
+
+  use {
+    'j-hui/fidget.nvim',
+    tag = 'legacy',
+    config = function()
+      require("fidget").setup {
+        -- options
+      }
+    end,
+  }
+
+  use {
+    'm4xshen/hardtime.nvim',
+    requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      require("hardtime").setup()
+    end,
+  }
+
+  use 'voldikss/vim-floaterm'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -159,12 +190,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 
 -- Turn on lsp status information
-require('fidget').setup()
-
-
-
-
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

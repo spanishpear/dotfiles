@@ -22,11 +22,20 @@ rt.setup({
         checkOnSave = {
           command = "clippy"
         },
+        diagnostics = {
+	        disabled = { "unresoved-proc-macro", "missing-unsafe" },
+        },
+        experimental = {
+          procAttrMacros = true,
+        },
         assist = {
           importGranularity = "module",
           importPrefix = "by_self",
         },
         cargo = {
+          buildScripts = {
+            enable = true
+          },
           loadOutDirsFromCheck = true
         },
         procMacro = {
