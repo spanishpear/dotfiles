@@ -69,10 +69,8 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.keymap.set('i', '<C-t>', "copilot#Accept('<CR>')", {noremap = true, silent = true, expr=true, replace_keycodes = false })
 
 -- set relative number
-
 vim.wo.relativenumber = true
 
 -- vim prosession
 vim.g.prosession_per_branch = 1
-
 vim.g.floaterm_keymap_toggle = '<A-t>'

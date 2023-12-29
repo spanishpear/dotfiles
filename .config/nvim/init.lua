@@ -28,9 +28,6 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
     },
   }
-
-  use 'junegunn/goyo.vim' 
-
   -- github copilot 
   use 'github/copilot.vim'
 
@@ -51,18 +48,12 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
-  use 'tpope/vim-obsession'
-  use 'tpope/vim-surround'
 
   -- shows keybindings for the next key in a chord
   use {
     "folke/which-key.nvim",
     config = function()
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
+      require("which-key").setup {}
     end
   }
 
@@ -71,10 +62,12 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb' -- enables :GBrowse
   use 'lewis6991/gitsigns.nvim' -- gutter decorations for git
 
+  -- TPOPE BELOVED --
+  use 'tpope/vim-surround'
+
   -- STYLING--
   use 'morhetz/gruvbox' -- gruvbox dark theme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   use 'dracula/vim'
@@ -87,10 +80,7 @@ require('packer').startup(function(use)
 
   -- for inlayhints, etc
   use 'simrat39/rust-tools.nvim'
-
   use 'rust-lang/rust.vim'
-
-  use 'nvim-tree/nvim-web-devicons'
 
   -- for tabs 
   use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
@@ -99,13 +89,15 @@ require('packer').startup(function(use)
   use 'lepture/vim-jinja'
 
   -- for file explorer
+  use 'nvim-tree/nvim-web-devicons'
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+      'nvim-tree/nvim-web-devicons', -- for file icons
     },
   }
 
+  -- auto setup sessions
   use {
     'dhruvasagar/vim-prosession',
     requires = {
@@ -121,9 +113,7 @@ require('packer').startup(function(use)
     'j-hui/fidget.nvim',
     tag = 'legacy',
     config = function()
-      require("fidget").setup {
-        -- options
-      }
+      require("fidget").setup {}
     end,
   }
 
@@ -135,8 +125,14 @@ require('packer').startup(function(use)
     end,
   }
 
+  -- alt-t binding for term
   use 'voldikss/vim-floaterm'
 
+  use 'folke/trouble.nvim'
+  use {
+    'nvimtools/none-ls.nvim',
+    requres = {}
+  }
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
