@@ -28,7 +28,8 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme dracula]]
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -59,18 +60,22 @@ vim.diagnostic.config({
 -- set github copilot settings
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
+vim.keymap.set('i', '<C-y>', "copilot#Accept('<CR>')", {noremap = true, silent = true, expr=true, replace_keycodes = false })
 
--- folding
-vim.o.foldlevel = 20
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- copilot accept 
-vim.keymap.set('i', '<C-t>', "copilot#Accept('<CR>')", {noremap = true, silent = true, expr=true, replace_keycodes = false })
+
+vim.keymap.set('n', '<A-t>', ':FloatermToggle<CR>i', {noremap = true})
+vim.keymap.set('!', '<A-t>', '<Esc>:FloatermToggle<CR>i', {noremap = true})
+vim.keymap.set('t', '<A-t>', '<C-\\><C-n>:FloatermToggle<CR>', {noremap = true})
 
 -- set relative number
 vim.wo.relativenumber = true
 
--- vim prosession
+vim.g.rooter_patterns = {'>afm'}
+
 vim.g.prosession_per_branch = 1
 vim.g.floaterm_keymap_toggle = '<A-t>'
+
+-- vim.g["prettier#autoformat"] = 1
+-- vim.g["prettier#autoformat_require_pragma"] = 0

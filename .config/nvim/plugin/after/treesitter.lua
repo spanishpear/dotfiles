@@ -1,6 +1,10 @@
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'python', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'python', 'rust', 'typescript', 'help', 'tsx' },
+  sync_install = false,
+  modules = {},
+  ignore_install = {},
+  auto_install = false,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -13,6 +17,7 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<c-backspace>',
     },
   },
+
   textobjects = {
     select = {
       enable = true,
@@ -58,4 +63,6 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+vim.keymap.set("n", "<leader>ga", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 

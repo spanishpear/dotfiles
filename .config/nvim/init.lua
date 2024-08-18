@@ -11,9 +11,24 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use 'airblade/vim-rooter'
+  -- Syntax aware objects
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+    end,
+    requires = {
+      { "nvim-telescope/telescope-live-grep-args.nvim" },
+    },
+    config = function()
+      require("telescope").load_extension("live_grep_args")
+    end,
+  }
 
-  use { -- LSP Configuration & Plugins
+
+  -- LSP Configuration & Plugins
+  use {
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
@@ -28,26 +43,39 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
     },
   }
+
   -- github copilot 
   use 'github/copilot.vim'
 
-  use { -- Autocompletion
+  use 'mechatroner/rainbow_csv'
+
+  use 'airblade/vim-rooter'
+
+  -- Autocompletion
+  use {
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
-  use { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
+  -- while tree-sitter doesn't work for typescript
+  -- DO NOT DELETE or import type syntax breaks
+  -- use 'leafgarland/typescript-vim'
+  -- use 'peitalin/vim-jsx-typescript'
+
+  use {
+    "pmizio/typescript-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   }
 
-  use { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
 
+  -- surround bindings
+  use 'tpope/vim-surround'
+
+  -- keep state between sessions
+  use {
+    'dhruvasagar/vim-prosession',
+    requires = {'tpope/vim-obsession'}
+  }
 
   -- shows keybindings for the next key in a chord
   use {
@@ -57,37 +85,44 @@ require('packer').startup(function(use)
     end
   }
 
+  use {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+      }
+    end
+  }
+
+  -- selective highlighting
+  use {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {
+      }
+    end
+  }
+
+
   -- GIT RELATED --
   use 'tpope/vim-fugitive' -- :Git commands
   use 'tpope/vim-rhubarb' -- enables :GBrowse
   use 'lewis6991/gitsigns.nvim' -- gutter decorations for git
 
-  -- TPOPE BELOVED --
-  use 'tpope/vim-surround'
+  -- theming --
+  use 'dracula/vim' 
+  use 'ellisonleao/gruvbox.nvim' 
+  use 'folke/tokyonight.nvim' 
+  use { "catppuccin/nvim", as = "catppuccin" }
+  -- toggle themes via :Themery
+  use 'zaldih/themery.nvim'
+
 
   -- STYLING--
-  use 'morhetz/gruvbox' -- gruvbox dark theme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
-  use 'dracula/vim'
-
-  -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
-
-  -- for inlayhints, etc
-  use 'simrat39/rust-tools.nvim'
-  use 'rust-lang/rust.vim'
-
-  -- for tabs 
-  use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
-
-  -- jinja highlights
-  use 'lepture/vim-jinja'
-
+  use 'mhinz/vim-startify' -- start screen 
+  use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- tabs
   -- for file explorer
   use 'nvim-tree/nvim-web-devicons'
   use {
@@ -97,18 +132,32 @@ require('packer').startup(function(use)
     },
   }
 
-  -- auto setup sessions
+  -- Fuzzy Finder (files, lsp, etc)
+  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+
+  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use {
-    'dhruvasagar/vim-prosession',
-    requires = {
-      'tpope/vim-obsession',
-    },
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+  }
+  use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
+  -- for rust inlayhints, etc
+  use 'simrat39/rust-tools.nvim'
+  use 'rust-lang/rust.vim'
+
+  -- jinja highlights
+  use 'lepture/vim-jinja'
+
+  -- allow for better jumping 
   use {
     'easymotion/vim-easymotion',
   }
 
+  -- LSP loading state
   use {
     'j-hui/fidget.nvim',
     tag = 'legacy',
@@ -117,6 +166,7 @@ require('packer').startup(function(use)
     end,
   }
 
+  -- vim hard time, makes my life harder
   use {
     'm4xshen/hardtime.nvim',
     requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
@@ -125,10 +175,17 @@ require('packer').startup(function(use)
     end,
   }
 
+  -- Float baby float
   -- alt-t binding for term
   use 'voldikss/vim-floaterm'
 
+  -- pretty list of stuff
   use 'folke/trouble.nvim'
+
+  -- folding
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
+  -- e.g. for prettierd
   use {
     'nvimtools/none-ls.nvim',
     requres = {}
@@ -181,9 +238,8 @@ require('Comment').setup()
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-
 
 -- Turn on lsp status information
 
