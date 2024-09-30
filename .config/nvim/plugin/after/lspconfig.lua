@@ -108,6 +108,11 @@ local servers = {
   },
 }
 
+local user = os.getenv("USER") or os.getenv("USERNAME") -- Get the username from the environment
+local max_memory = 18432 -- Default value
+if user == "ubuntu" then
+    max_memory = 40096 -- Change this value according to your needs for a specific user
+end
 
 require("typescript-tools").setup {
   on_attach = on_attach,
@@ -122,7 +127,7 @@ require("typescript-tools").setup {
   settings = {
     expose_as_code_action = 'all',
     publish_diagnostic_on = 'change',
-    tsserver_max_memory = 18432,
+    tsserver_max_memory = max_memory,
     tsserver_file_preferences = {
         includeCompletionsForModuleExports = true,
         includeInlayParameterNameHints = 'all',

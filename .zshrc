@@ -217,32 +217,6 @@ else
     source /tmp/.ssh-agent > /dev/null
 fi
 
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-
-# call nvm use when there's a file on cd
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
 source ~/.afm-git-configrc
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
@@ -259,3 +233,10 @@ esac
 # pnpm end
 
 export PATH="/Users/ssomaiya/.local/bin:$PATH"
+
+# fnm
+FNM_PATH="/Users/ssomaiya/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/ssomaiya/Library/Application Support/fnm:$PATH"
+  eval "`fnm env --use-on-cd`"
+fi
