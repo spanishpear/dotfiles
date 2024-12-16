@@ -188,6 +188,7 @@ export TERM=xterm-256color
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 source $HOME/.stash_token
+source $HOME/.bbc_token
 export NVM_DIR=~/.nvm
 
 # better zsh histroy
