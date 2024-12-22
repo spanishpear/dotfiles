@@ -140,8 +140,8 @@ alias zshconfig="micro ~/.zshrc"
 alias zshrc="nvim $HOME/.zshrc && source $HOME/.zshrc "
 alias nvimrc="cd $HOME/.config/nvim/ && nvim init.lua && cd -"
 alias ohmyzsh="code ~/.oh-my-zsh"
-alias ls="exa"
-alias ll="exa -l"
+alias ls="eza"
+alias ll="eza -l"
 alias ns="npm start"
 alias gs="git status"
 alias glog="git log 2>/dev/null || cat log.out 2>/dev/null"
@@ -189,7 +189,8 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 source $HOME/.stash_token
 source $HOME/.bbc_token
-export NVM_DIR=~/.nvm
+source $HOME/.afm-git-configrc
+export NVM_DIR=$HOME/.nvm
 
 # better zsh histroy
 export HISTFILE=~/.zsh_history
@@ -218,22 +219,13 @@ else
     source /tmp/.ssh-agent > /dev/null
 fi
 
-source ~/.afm-git-configrc
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 export GPG_TTY=$(tty)
 export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'
 
-# pnpm
-export PNPM_HOME="/Users/ssomaiya/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-export PATH="/Users/ssomaiya/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # fnm
 FNM_PATH="/Users/ssomaiya/Library/Application Support/fnm"
