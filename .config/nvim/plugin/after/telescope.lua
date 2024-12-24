@@ -27,6 +27,7 @@ local ts_select_dir_for_grep = function(prompt_bufnr)
   })
 end
 
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -78,6 +79,15 @@ require('telescope').setup {
 }
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+
+-- To get telescope-file-browser loaded and working with telescope,
+-- you need to call load_extension, somewhere after setup function:
+require("telescope").load_extension "file_browser"
+
+
+-- open file_browser with the path of the current buffer
+vim.keymap.set("n", "<space>cf", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+vim.keymap.set("n", "<space>fb", ":Telescope file_browser<CR>")
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
