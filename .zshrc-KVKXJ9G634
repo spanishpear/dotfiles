@@ -1,0 +1,21 @@
+## File that only is sourced if host is KVKXJ9G634
+
+if [ -f $HOME/.stash_token ]; then
+    source $HOME/.stash_token
+fi
+
+if [ -f $HOME/.bbc_token ]; then
+    source $HOME/.bbc_token
+fi
+
+if [ -f $HOME/.afm-git-configrc ]; then
+    source $HOME/.afm-git-configrc
+fi
+
+
+# Aliases
+alias windows="m1ddc display 1 set input 15; m1ddc display 2 set input 15"
+alias mac="m1ddc display 1 set input 17; m1ddc display 2 set input 18"
+alias yd="dev-tooling/cli/bin/run"
+export PATH="$PATH/opt/homebrew/opt/util-linux/bin:/opt/homebrew/bin:/opt/atlassian/bin:$HOME/atlassian/afm/afm-tools/path"
+

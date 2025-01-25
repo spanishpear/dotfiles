@@ -5,18 +5,11 @@ local function get_bufnr(bufnr)
     return type(bufnr) == 'number' and bufnr or vim.api.nvim_get_current_buf()
 end
 
+-- This function is used to find the root directory of a project based on the presence of a file pattern.
 local function root_dir_from_pattern(bufnr, pattern)
     local root_dir = vim.fs.root(get_bufnr(bufnr), pattern)
     return root_dir or vim.loop.cwd()
 end
-
-local function yarn_lock_root_dir(bufnr)
-    return root_dir_from_pattern(bufnr, 'yarn.lock')
-end
-
--- Pass in `typescript-tools` config
-
-
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -70,23 +63,6 @@ local servers = {
   clangd = {},
   pyright = {},
   rust_analyzer = {},
-  -- not used - using https://github.com/pmizio/typescript-tools.nvim
-  -- tsserver = {
-  --     init_options = {
-  --       hostInfo = "neovim",
-  --       maxTsServerMemory = 18432,
-  --       tsserver = {
-  --         -- logVerbosity [string] Verbosity of the information logged into the tsserver log files. Log levels from least to most amount of details: 'off', 'terse', 'normal', 'requestTime', 'verbose'. Default: 'off'
-  --         logVerbosity = "verbose",
-  --         logDirectory = "/Users/ssomaiya/.lsplog/tsserver",
-  --         path = "/Users/ssomaiya/atlassian/afm/jira/node_modules/typescript/lib/tsserver.js",
-  --         root_dir = function(...)
-  --           return require("lspconfig.util").root_pattern("yarn.lock")(...)
-  --         end,
-  --
-  --     }
-  --   },
-  -- },
   eslint = {},
   lua_ls = {
     Lua = {
@@ -109,7 +85,7 @@ local servers = {
 }
 
 local user = os.getenv("USER") or os.getenv("USERNAME") -- Get the username from the environment
-local max_memory = 18432 -- Default value
+local max_memory = 16432 -- Default value
 if user == "ubuntu" then
     max_memory = 40096 -- Change this value according to your needs for a specific user
 end
@@ -122,7 +98,7 @@ require("typescript-tools").setup {
     }),
   },
   root_dir = function(_, bufnr)
-      return yarn_lock_root_dir(bufnr)
+      return root_dir_from_pattern(bufnr, 'yarn.lock')
   end,
   settings = {
     expose_as_code_action = 'all',
@@ -173,16 +149,6 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
--- mason_lspconfig.setup_handlers {
---   function(server_name)
---     require('lspconfig')[server_name].setup {
---       capabilities = capabilities,
---       on_attach = on_attach,
---       settings = servers[server_name],
---     }
---   end,
--- }
---
 require'lspconfig'.lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
