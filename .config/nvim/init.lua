@@ -185,11 +185,15 @@ require('packer').startup(function(use)
   -- folding
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
-  -- e.g. for prettierd
-  use {
-    'nvimtools/none-ls.nvim',
-    requres = {}
-  }
+  -- formatting
+  use({
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup()
+    end,
+  })
+
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then

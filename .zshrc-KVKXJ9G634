@@ -13,6 +13,8 @@ if [ -f $HOME/.afm-git-configrc ]; then
 fi
 
 
+PRETTIERD_LOCAL_PRETTIER_ONLY=1
+PRETTIERD_DEFAULT_CONFIG="$HOME/atlassian/afm/jira/.prettierrc"
 # Aliases
 alias windows="m1ddc display 1 set input 15; m1ddc display 2 set input 15"
 alias mac="m1ddc display 1 set input 17; m1ddc display 2 set input 18"

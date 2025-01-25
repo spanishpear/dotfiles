@@ -1,20 +1,8 @@
--- setup neodev before LSP
-require("neodev").setup({})
+-- Description: Configuration for the LSP servers
+-- This file is responsible for setting up the LSP servers and configuring them to work with the rest of the system.
 
-local function get_bufnr(bufnr)
-    return type(bufnr) == 'number' and bufnr or vim.api.nvim_get_current_buf()
-end
-
--- This function is used to find the root directory of a project based on the presence of a file pattern.
-local function root_dir_from_pattern(bufnr, pattern)
-    local root_dir = vim.fs.root(get_bufnr(bufnr), pattern)
-    return root_dir or vim.loop.cwd()
-end
-
--- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- log when it's attached_bufs
   -- In this case, we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
@@ -46,11 +34,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
 end
 
 -- Enable the following language servers
@@ -91,7 +74,12 @@ if user == "ubuntu" then
 end
 
 require("typescript-tools").setup {
-  on_attach = on_attach,
+  on_attach = function (client, bufnr)
+    on_attach(client, bufnr)
+    -- disable formatting for tsserver
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
   handlers = {
     ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = 'rounded',
@@ -123,22 +111,27 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Option 2: nvim lsp as LSP client
 -- Tell the server the capability of foldingRange,
 -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
-local fold_capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
+
 local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+
 for _, ls in ipairs(language_servers) do
     require('lspconfig')[ls].setup({
-        capabilities = fold_capabilities,
+        capabilities = capabilities,
         on_attach = on_attach,
+        -- extend the settings in above table
         settings = servers[ls]
         -- you can add other fields for setting up lsp server in this table
     })
 end
-require('ufo').setup()
 
+
+-- folding 
+-- https://github.com/kevinhwang91/nvim-ufo
+require('ufo').setup()
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
@@ -148,41 +141,6 @@ local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
-
-require'lspconfig'.lua_ls.setup {
-  on_init = function(client)
-    local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
-          },
-          diagnostics = {
-            globals = { "vim" },
-          },
-          -- Make the server aware of Neovim runtime files
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
-            }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
-          }
-        }
-      })
-
-      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-    end
-    return true
-  end,
-}
-
 
 require 'lspconfig'.eslint.setup({
    settings = {
@@ -195,4 +153,3 @@ require 'lspconfig'.eslint.setup({
      })
    end,
 })
-
