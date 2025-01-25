@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/shrey/.zsh/completions:"* ]]; then export FPATH="/home/shrey/.zsh/completions:$FPATH"; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -98,9 +100,18 @@ export NVIM="$HOME/.config/nvim"
 export TERM=xterm-256color
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
-source $HOME/.stash_token
-source $HOME/.bbc_token
-source $HOME/.afm-git-configrc
+# todo - move this to osx.zsh
+if [ -f $HOME/.stash_token ]; then
+    source $HOME/.stash_token
+fi
+
+if [ -f $HOME/.bbc_token ]; then
+    source $HOME/.bbc_token
+fi
+
+if [ -f $HOME/.afm-git-configrc ]; then
+    source $HOME/.afm-git-configrc
+fi
 
 # better zsh histroy
 export HISTFILE=~/.zsh_history
@@ -137,9 +148,9 @@ export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# fnm
-FNM_PATH="/Users/ssomaiya/Library/Application Support/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/ssomaiya/Library/Application Support/fnm:$PATH"
-  eval "`fnm env --use-on-cd`" &> /dev/null 
+if [[ -f ~/.zshrc-$HOST ]]; then
+   [[ ! -f ~/.zshrc-$HOST.zwc || ~/.zshrc-$HOST -nt ~/.zshrc-$HOST.zwc ]] && { zcompile ~/.zshrc-$HOST;}
+   source ~/.zshrc-$HOST
 fi
+
+. "/home/shrey/.deno/env"
