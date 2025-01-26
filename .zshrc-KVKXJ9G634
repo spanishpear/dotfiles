@@ -19,5 +19,13 @@ PRETTIERD_DEFAULT_CONFIG="$HOME/atlassian/afm/jira/.prettierrc"
 alias windows="m1ddc display 1 set input 15; m1ddc display 2 set input 15"
 alias mac="m1ddc display 1 set input 17; m1ddc display 2 set input 18"
 alias yd="dev-tooling/cli/bin/run"
-export PATH="$PATH/opt/homebrew/opt/util-linux/bin:/opt/homebrew/bin:/opt/atlassian/bin:$HOME/atlassian/afm/afm-tools/path"
+export PATH="$PATH:/opt/homebrew/opt/util-linux/bin:/opt/homebrew/bin:/opt/atlassian/bin:$HOME/atlassian/afm/afm-tools/path"
+
+# if fnm exists, load it, if not loaded already
+if command -v fnm &> /dev/null; then
+    # if FNM_MULTISHELL_PATH is defined, fnm already loaded
+    if [ ! -z "$FNM_MULTISHELL_PATH" ]; then
+        eval "$(fnm env --use-on-cd)" &> /dev/null
+    fi
+fi
 

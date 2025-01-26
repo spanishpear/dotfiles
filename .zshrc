@@ -72,7 +72,7 @@ alias cr="cargo run"
 export TERM=xterm-256color
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
-PATH=usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 export PATH=$PATH:"/opt/X11/bin":"$HOME/.local/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:$HOME/bin:$HOME/.jenv/bin:$JAVA_HOME/bin"
 
 # better zsh histroy
@@ -109,6 +109,11 @@ export GPG_TTY=$(tty)
 
 # https://github.com/nodejs/node/issues/52229
 export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'
+
+# if fnm is installed, load it
+if command -v fnm &> /dev/null; then
+    eval "$(fnm env --use-on-cd)"
+fi
 
 if [[ -f ~/.zshrc-$HOST ]]; then
    [[ ! -f ~/.zshrc-$HOST.zwc || ~/.zshrc-$HOST -nt ~/.zshrc-$HOST.zwc ]] && { zcompile ~/.zshrc-$HOST;}
