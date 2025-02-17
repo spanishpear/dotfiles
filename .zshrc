@@ -37,6 +37,28 @@ fzf-git-checkout() {
 }
 
 
+# $1 is the branch name
+# $2 is the remote name
+git-fetch-and-checkout-from-origin() {
+  set +x
+  local branch 
+  local remote
+
+  branch=$1
+  remote="origin"
+
+
+ # check if any changes on local
+ if [[ -n $(git status -s) ]]; then
+   echo "You have changes on local. Please commit or stash them first."
+   return 1
+ fi
+
+ git fetch $remote $branch || return 1
+ git checkout $branch || return 1
+ set -x
+}
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -94,13 +116,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Automatically start the SSH agent if it's not already running
-if [ ! -f /tmp/.ssh-agent ]; then
-    ssh-agent > /tmp/.ssh-agent
-    source /tmp/.ssh-agent > /dev/null
-    ssh-add ~/.ssh/id_rsa > /dev/null
-else
-    source /tmp/.ssh-agent > /dev/null
-fi
+#if [ ! -f /tmp/.ssh-agent ]; then
+#     ssh-agent > /tmp/.ssh-agent
+#     source /tmp/.ssh-agent > /dev/null
+#     ssh-add ~/.ssh/id_rsa > /dev/null
+# else
+#     source /tmp/.ssh-agent > /dev/null
+# fi
 
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
@@ -110,12 +132,9 @@ export GPG_TTY=$(tty)
 # https://github.com/nodejs/node/issues/52229
 export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'
 
-# if fnm is installed, load it
-if command -v fnm &> /dev/null; then
-    eval "$(fnm env --use-on-cd)"
-fi
-
 if [[ -f ~/.zshrc-$HOST ]]; then
    [[ ! -f ~/.zshrc-$HOST.zwc || ~/.zshrc-$HOST -nt ~/.zshrc-$HOST.zwc ]] && { zcompile ~/.zshrc-$HOST;}
    source ~/.zshrc-$HOST
 fi
+
+source ~/.afm-git-configrc

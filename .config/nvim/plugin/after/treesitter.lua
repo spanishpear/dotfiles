@@ -3,7 +3,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'python', 'rust', 'typescript', 'help', 'tsx' },
   sync_install = false,
   modules = {},
-  ignore_install = {},
+  ignore_install = {"help"},
   auto_install = false,
 
   highlight = { enable = true },

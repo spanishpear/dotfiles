@@ -8,7 +8,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
   # https://github.com/FelixKratz/JankyBorders
-  'exec-and-forget borders active_color=0xFFCF9FFF inactive_color=0xff494d64 width=6.0',
+  # 'exec-and-forget borders active_color=0xFFCF9FFF inactive_color=0xff494d64 width=6.0',
   # run sketchybar
   'exec-and-forget sketchybar'
 ]

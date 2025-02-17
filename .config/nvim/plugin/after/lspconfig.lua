@@ -73,6 +73,11 @@ if user == "ubuntu" then
     max_memory = 40096 -- Change this value according to your needs for a specific user
 end
 
+local function root_dir_from_pattern(bufnr, pattern)
+    local root_dir = vim.fs.root(get_bufnr(bufnr), pattern)
+    return root_dir or vim.loop.cwd()
+end
+
 require("typescript-tools").setup {
   on_attach = function (client, bufnr)
     on_attach(client, bufnr)
@@ -116,7 +121,7 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true
 }
 
-local language_servers = require("lspconfig").util._available_servers() -- or list servers manually like {'gopls', 'clangd'}
+local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
 for _, ls in ipairs(language_servers) do
     require('lspconfig')[ls].setup({
         capabilities = capabilities,

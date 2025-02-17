@@ -6,9 +6,8 @@
 
 function BitbucketLink()
   local file_path = vim.fn.expand('%:p')
-  -- make sure we strip every text that is not AFTER afm
-  -- make sure it works for variants like `afm-sparse/` or `afm-full` or `afm/`
-  file_path = string.match(file_path, "afm.*/(.*)")
+  -- if no match, then look for the atlassian-frontend-monorepo
+  file_path = string.match(file_path, "atlassian-frontend-monorepo.*/(.*)")
 
 
   local line_number = vim.fn.line('.')
