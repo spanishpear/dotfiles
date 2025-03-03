@@ -21,7 +21,14 @@ return {
 		words = { enabled = true },
 		styles = {
 			notification = {
-				-- wo = { wrap = true } -- Wrap notifications
+				wo = { wrap = true }, -- Wrap notifications
+			},
+			terminal = {
+				position = "float",
+				backdrop = 40,
+				height = 0.85,
+				width = 0.85,
+				zindex = 50,
 			},
 		},
 		animate = {
@@ -29,6 +36,22 @@ return {
 		},
 		terminal = {
 			enabled = true,
+			win = {
+				style = "terminal",
+				keys = {
+					-- Allow for Alt-t to exit term mode
+					term_normal = {
+						"<A-t>",
+						function()
+							return "<C-\\><C-n><cmd> lua require('snacks').terminal()<CR>"
+						end,
+						mode = "t",
+
+						expr = true,
+						desc = "Double escape to normal mode",
+					},
+				},
+			},
 		},
 	},
 	keys = {
@@ -76,6 +99,7 @@ return {
 			desc = "File Explorer",
 		},
 		-- find
+
 		{
 			"<leader>fb",
 			function()
@@ -83,6 +107,7 @@ return {
 			end,
 			desc = "Buffers",
 		},
+
 		{
 			"<leader>fc",
 			function()
@@ -126,6 +151,7 @@ return {
 			end,
 			desc = "Git Branches",
 		},
+
 		{
 			"<leader>gl",
 			function()
@@ -154,6 +180,7 @@ return {
 			end,
 			desc = "Git Stash",
 		},
+
 		{
 			"<leader>gd",
 			function()
@@ -176,6 +203,7 @@ return {
 			end,
 			desc = "Buffer Lines",
 		},
+
 		{
 			"<leader>sB",
 			function()
@@ -241,6 +269,7 @@ return {
 			end,
 			desc = "Commands",
 		},
+
 		{
 			"<leader>sd",
 			function()
@@ -297,6 +326,7 @@ return {
 			end,
 			desc = "Location List",
 		},
+
 		{
 			"<leader>sm",
 			function()
@@ -325,6 +355,7 @@ return {
 			end,
 			desc = "Quickfix List",
 		},
+
 		{
 			"<leader>sR",
 			function()
@@ -361,6 +392,7 @@ return {
 			end,
 			desc = "Goto Declaration",
 		},
+
 		{
 			"gr",
 			function()
@@ -369,6 +401,7 @@ return {
 			nowait = true,
 			desc = "References",
 		},
+
 		{
 			"gI",
 			function()
@@ -470,14 +503,7 @@ return {
 			desc = "Dismiss All Notifications",
 		},
 		{
-			"<M-t>",
-			function()
-				Snacks.terminal()
-			end,
-			desc = "Toggle Terminal",
-		},
-		{
-			{ "t", "<M-t>" },
+			"<A-t>",
 			function()
 				Snacks.terminal()
 			end,
@@ -505,24 +531,6 @@ return {
 			end,
 			desc = "Prev Reference",
 			mode = { "n", "t" },
-		},
-		{
-			"<leader>N",
-			desc = "Neovim News",
-			function()
-				Snacks.win({
-					file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-					width = 0.6,
-					height = 0.6,
-					wo = {
-						spell = false,
-						wrap = false,
-						signcolumn = "yes",
-						statuscolumn = " ",
-						conceallevel = 3,
-					},
-				})
-			end,
 		},
 	},
 	init = function()

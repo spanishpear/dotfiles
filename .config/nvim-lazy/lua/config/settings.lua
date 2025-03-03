@@ -52,12 +52,6 @@ vim.keymap.set(
 	{ noremap = true, silent = true, expr = true, replace_keycodes = false }
 )
 
--- legacy floatterm settings
--- vim.keymap.set('n', '<A-t>', ':FloatermToggle<CR>i', {noremap = true})
--- vim.keymap.set('!', '<A-t>', '<Esc>:FloatermToggle<CR>i', {noremap = true})
--- vim.keymap.set('t', '<A-t>', '<C-\\><C-n>:FloatermToggle<CR>', {noremap = true})
--- vim.g.floaterm_keymap_toggle = '<A-t>'
-
 -- set relative number
 vim.wo.relativenumber = true
 vim.g.rooter_patterns = { ">afm", ">atlassian-frontend-monorepo" }
