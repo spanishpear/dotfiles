@@ -117,7 +117,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
-export GPG_TTY=$(tty)
+export GPG_TTY=`tty`
 
 # https://github.com/nodejs/node/issues/52229
 export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'

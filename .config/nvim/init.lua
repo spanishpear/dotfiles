@@ -43,6 +43,8 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
     },
   }
+  
+  -- use "folke/snacks.nvim"
 
   -- github copilot 
   use 'github/copilot.vim'
@@ -58,10 +60,6 @@ require('packer').startup(function(use)
   }
 
   -- while tree-sitter doesn't work for typescript
-  -- DO NOT DELETE or import type syntax breaks
-  -- use 'leafgarland/typescript-vim'
-  -- use 'peitalin/vim-jsx-typescript'
-
   use {
     "pmizio/typescript-tools.nvim",
     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -85,6 +83,7 @@ require('packer').startup(function(use)
     end
   }
 
+  -- zen mode
   use {
     "folke/zen-mode.nvim",
     config = function()
@@ -93,7 +92,7 @@ require('packer').startup(function(use)
     end
   }
 
-  -- selective highlighting
+  -- selective highlighting, e.g. for zen
   use {
     "folke/twilight.nvim",
     config = function()
@@ -121,8 +120,8 @@ require('packer').startup(function(use)
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
-  use 'mhinz/vim-startify' -- start screen 
   use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'} -- tabs
+
   -- for file explorer
   use 'nvim-tree/nvim-web-devicons'
   use {
@@ -145,10 +144,6 @@ require('packer').startup(function(use)
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
-  -- for rust inlayhints, etc
-  use 'simrat39/rust-tools.nvim'
-  use 'rust-lang/rust.vim'
-
   -- jinja highlights
   use 'lepture/vim-jinja'
 
@@ -160,7 +155,6 @@ require('packer').startup(function(use)
   -- LSP loading state
   use {
     'j-hui/fidget.nvim',
-    tag = 'legacy',
     config = function()
       require("fidget").setup {}
     end,
@@ -174,16 +168,6 @@ require('packer').startup(function(use)
       require("hardtime").setup()
     end,
   }
-
-  -- Float baby float
-  -- alt-t binding for term
-  use 'voldikss/vim-floaterm'
-
-  -- pretty list of stuff
-  use 'folke/trouble.nvim'
-
-  -- folding
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
   -- formatting
   use({
@@ -240,12 +224,9 @@ require('Comment').setup()
 -- See `:help nvim-treesitter`
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Next diagnostic"})
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Previous diagnostic"})
 vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-
--- Turn on lsp status information
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = '[D]iagnostic [Q]uickfix' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
