@@ -115,16 +115,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Automatically start the SSH agent if it's not already running
-#if [ ! -f /tmp/.ssh-agent ]; then
-#     ssh-agent > /tmp/.ssh-agent
-#     source /tmp/.ssh-agent > /dev/null
-#     ssh-add ~/.ssh/id_rsa > /dev/null
-# else
-#     source /tmp/.ssh-agent > /dev/null
-# fi
-
-
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 export GPG_TTY=$(tty)
@@ -137,4 +127,6 @@ if [[ -f ~/.zshrc-$HOST ]]; then
    source ~/.zshrc-$HOST
 fi
 
-source ~/.afm-git-configrc
+if [[ -f ~/.afm-git-configrc ]]; then
+   source ~/.afm-git-configrc
+fi
