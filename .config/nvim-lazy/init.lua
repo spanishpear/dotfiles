@@ -1,19 +1,11 @@
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Next diagnostic"})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Previous diagnostic"})
-vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = '[D]iagnostic AAAAAAA [O]pen' })
-vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = '[D]iagnostic [Q]uickfix' })
--- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Next diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float, { desc = "[D]iagnostic [O]pen" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "[D]iagnostic [Q]uickfix" })
 
-
--- require's lua/config/lazy.lua
-require("config.lazy")
-
+-- require the 'lua/config/init.lua' file
+require("config")
 
 -- require('packer').startup(function(use)
 --   -- Package manager
@@ -51,10 +43,10 @@ require("config.lazy")
 --       'folke/neodev.nvim',
 --     },
 --   }
---   
+--
 --   -- use "folke/snacks.nvim"
 --
---   -- github copilot 
+--   -- github copilot
 --   use 'github/copilot.vim'
 --
 --   use 'mechatroner/rainbow_csv'
@@ -116,9 +108,9 @@ require("config.lazy")
 --   use 'lewis6991/gitsigns.nvim' -- gutter decorations for git
 --
 --   -- theming --
---   use 'dracula/vim' 
---   use 'ellisonleao/gruvbox.nvim' 
---   use 'folke/tokyonight.nvim' 
+--   use 'dracula/vim'
+--   use 'ellisonleao/gruvbox.nvim'
+--   use 'folke/tokyonight.nvim'
 --   use { "catppuccin/nvim", as = "catppuccin" }
 --   -- toggle themes via :Themery
 --   use 'zaldih/themery.nvim'
@@ -152,20 +144,10 @@ require("config.lazy")
 --     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
 --   }
 --
---   -- jinja highlights
---   use 'lepture/vim-jinja'
 --
---   -- allow for better jumping 
+--   -- allow for better jumping
 --   use {
 --     'easymotion/vim-easymotion',
---   }
---
---   -- LSP loading state
---   use {
---     'j-hui/fidget.nvim',
---     config = function()
---       require("fidget").setup {}
---     end,
 --   }
 --
 --   -- vim hard time, makes my life harder
@@ -177,24 +159,6 @@ require("config.lazy")
 --     end,
 --   }
 --
---   -- formatting
---   use({
---     "stevearc/conform.nvim",
---     config = function()
---       require("conform").setup()
---     end,
---   })
---
---
---   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
---   local has_plugins, plugins = pcall(require, 'custom.plugins')
---   if has_plugins then
---     plugins(use)
---   end
---
---   if is_bootstrap then
---     require('packer').sync()
---   end
 -- end)
 
 -- require('Comment').setup()
