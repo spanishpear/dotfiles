@@ -23,6 +23,7 @@ plugins=(
  zsh-autosuggestions 
  yarn
  z
+ diff-so-fancy
 )
  
 source $ZSH/oh-my-zsh.sh
