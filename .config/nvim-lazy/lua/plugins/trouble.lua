@@ -5,6 +5,7 @@ return {
 		"folke/snacks.nvim",
 		opts = function(_, opts)
 			return vim.tbl_deep_extend("force", opts or {}, {
+				use_lsp_diagnostic_signs = true,
 				picker = {
 					actions = require("trouble.sources.snacks").actions,
 					win = {

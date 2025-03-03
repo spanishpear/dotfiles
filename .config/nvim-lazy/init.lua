@@ -1,10 +1,3 @@
--- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Next diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float, { desc = "[D]iagnostic [O]pen" })
-vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "[D]iagnostic [Q]uickfix" })
-
--- require the 'lua/config/init.lua' file
 require("config")
 
 -- require('packer').startup(function(use)

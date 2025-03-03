@@ -55,11 +55,8 @@ return {
 	opts = {
 
 		formatters_by_ft = {
-
 			lua = { "stylua" },
-
 			python = { "isort", "black" },
-
 			rust = { "rustfmt", lsp_format = "fallback" },
 
 			-- Conform will run the first available formatter
