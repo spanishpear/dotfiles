@@ -1,10 +1,10 @@
 return {
 	"gbprod/yanky.nvim",
-	dependencies = {
-		{ "kkharji/sqlite.lua" },
-	},
 	opts = {
-		ring = { storage = "sqlite" },
+		ring = {
+			storage = "shada",
+			-- permanent_wrapper = require("yanky.wrappers").remove_carriage_return,
+		},
 	},
 	highlight = {
 		on_put = true,

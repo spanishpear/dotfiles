@@ -32,7 +32,7 @@ require("lazy").setup({
 		{ import = "plugins" },
 		-- auto setup from `lua/config/plugins/*.lua`
 		{
-			"morhetz/gruvbox",
+			"ellisonleao/gruvbox.nvim",
 			lazy = false,
 			config = function()
 				-- ensure colorscheme relevant options set correctly
@@ -41,6 +41,10 @@ require("lazy").setup({
 				vim.o.background = "dark"
 				-- gruvbox doesn't load the colorscheme by default
 				vim.cmd.colorscheme("gruvbox")
+				-- delte after https://github.com/ellisonleao/gruvbox.nvim/issues/383
+				vim.api.nvim_set_hl(0, "SnacksPickerDir", { link = "GruvboxGray" })
+				vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "GruvboxGray" })
+				vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUntracked", { link = "GruvboxGray" })
 			end,
 		},
 	},

@@ -7,14 +7,122 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = { enabled = true },
-		explorer = { enabled = true },
+		explorer = {
+			enabled = true,
+			replace_newtrw = true,
+		},
 		indent = { enabled = true },
 		input = { enabled = true },
 		notifier = {
 			enabled = true,
 			timeout = 2000,
 		},
-		picker = { enabled = true },
+		picker = {
+			enabled = true,
+			---@class snacks.picker.icons
+			icons = {
+				files = {
+					enabled = true, -- show file icons
+					dir = "󰉋 ",
+					dir_open = "󰝰 ",
+					file = "󰈔 ",
+				},
+				keymaps = {
+					nowait = "󰓅 ",
+				},
+				tree = {
+					vertical = "│ ",
+					middle = "├╴",
+					last = "└╴",
+				},
+				undo = {
+					saved = " ",
+				},
+				ui = {
+					live = "󰐰 ",
+					hidden = "h",
+					ignored = "i",
+					follow = "f",
+					selected = "● ",
+					unselected = "○ ",
+				},
+				git = {
+
+					enabled = true, -- show git icons
+					commit = "󰜘 ", -- used by git log
+					staged = "●", -- staged changes. always overrides the type icons
+					added = "",
+					deleted = "",
+					ignored = " ",
+					modified = "○",
+					renamed = "",
+					unmerged = " ",
+					untracked = "?",
+				},
+				diagnostics = {
+					Error = " ",
+					Warn = " ",
+					Hint = " ",
+					Info = " ",
+				},
+				lsp = {
+					unavailable = "",
+					enabled = " ",
+					disabled = " ",
+					attached = "󰖩 ",
+				},
+
+				kinds = {
+					Array = " ",
+					Boolean = "󰨙 ",
+					Class = " ",
+					Color = " ",
+					Control = " ",
+					Collapsed = " ",
+
+					Constant = "󰏿 ",
+					Constructor = " ",
+					Copilot = " ",
+					Enum = " ",
+					EnumMember = " ",
+					Event = " ",
+
+					Field = " ",
+
+					File = " ",
+					Folder = " ",
+					Function = "󰊕 ",
+					Interface = " ",
+					Key = " ",
+					Keyword = " ",
+
+					Method = "󰊕 ",
+					Module = " ",
+					Namespace = "󰦮 ",
+					Null = " ",
+					Number = "󰎠 ",
+
+					Object = " ",
+
+					Operator = " ",
+					Package = " ",
+					Property = " ",
+					Reference = " ",
+					Snippet = "󱄽 ",
+					String = " ",
+
+					Struct = "󰆼 ",
+					Text = " ",
+					TypeParameter = " ",
+					Unit = " ",
+					Unknown = " ",
+
+					Value = " ",
+
+					Variable = "󰀫 ",
+				},
+			},
+		},
 		quickfile = { enabled = true },
 		scope = { enabled = true },
 		scroll = { enabled = true },
@@ -24,13 +132,18 @@ return {
 		styles = {
 			notification = {
 				wo = { wrap = true }, -- Wrap notifications
+				relative = "editor",
 			},
 			terminal = {
 				position = "float",
-				backdrop = 40,
+				backdrop = {
+					transparent = true,
+					blend = 85,
+				},
 				height = 0.85,
 				width = 0.85,
 				zindex = 50,
+				relative = "editor",
 			},
 		},
 		animate = {
