@@ -35,12 +35,53 @@ return {
 			-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
 			-- Adjusts spacing to ensure icons are aligned
 			nerd_font_variant = "mono",
+			-- Blink does not expose its default kind icons so you must copy them all (or set your custom ones) and add Copilot
+			kind_icons = {
+				Copilot = "",
+				Text = "󰉿",
+				Method = "󰊕",
+				Function = "󰊕",
+				Constructor = "󰒓",
+
+				Field = "󰜢",
+				Variable = "󰆦",
+				Property = "󰖷",
+
+				Class = "󱡠",
+				Interface = "󱡠",
+				Struct = "󱡠",
+				Module = "󰅩",
+
+				Unit = "󰪚",
+				Value = "󰦨",
+				Enum = "󰦨",
+				EnumMember = "󰦨",
+
+				Keyword = "󰻾",
+				Constant = "󰏿",
+
+				Snippet = "󱄽",
+				Color = "󰏘",
+				File = "󰈔",
+				Reference = "󰬲",
+				Folder = "󰉋",
+				Event = "󱐋",
+				Operator = "󰪚",
+				TypeParameter = "󰬛",
+			},
 		},
 
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+			default = {
+				"lazydev",
+				"lsp",
+				"path",
+				"snippets",
+				"buffer",
+				-- "copilot",
+			},
 			providers = {
 				lazydev = {
 					name = "LazyDev",
@@ -48,6 +89,12 @@ return {
 					-- make lazydev completions top priority (see `:h blink.cmp`)
 					score_offset = 100,
 				},
+				-- copilot = {
+				-- 	name = "copilot",
+				-- 	module = "blink-cmp-copilot",
+				-- 	score_offset = 100,
+				-- 	async = true,
+				-- },
 			},
 		},
 
