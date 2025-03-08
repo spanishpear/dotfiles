@@ -2,6 +2,7 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
+	enabled = true,
 	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true },
@@ -18,7 +19,8 @@ return {
 		scope = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
-		words = { enabled = true },
+		-- disable words for now because it's slow and clunky
+		words = { enabled = false },
 		styles = {
 			notification = {
 				wo = { wrap = true }, -- Wrap notifications
