@@ -106,7 +106,14 @@ return {
 				-- passing config.capabilities to blink.cmp merges with the capabilities in your
 				-- `opts[server].capabilities, if you've defined it
 				-- note - get_lsp_capabilities by default will call lsp make_client_capabilities
-				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				local capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				-- setup capabilities for nvim-ufo
+				capabilities.textDocument.foldingRange = {
+					dynamicRegistration = false,
+					rangeLimit = 5000,
+					lineFoldingOnly = true,
+				}
+				config.capabilities = capabilities
 				lspconfig[server].setup(config)
 			end
 		end,
