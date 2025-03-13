@@ -37,32 +37,6 @@ opt.autowrite = true -- Enable auto write
 opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 
--- Set wsl-clipboard for vim clipboard if running WSL
--- Check if the current linux kernal is microsoft WSL version
-local function is_wsl()
-	local version_file = io.open("/proc/version", "rb")
-	if version_file ~= nil and string.find(version_file:read("*a"), "microsoft") then
-		version_file:close()
-		return true
-	end
-	return false
-end
-
--- If current linux is under WSL then use static clipboard
-if is_wsl() then
-	vim.g.clipboard = {
-		name = "wsl-clipboard",
-		copy = {
-			["+"] = "/mnt/c/Windows/system32/clip.exe",
-			["*"] = "/mnt/c/Windows/system32/clip.exe",
-		},
-		paste = {
-			["+"] = '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			["*"] = '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-		},
-		cache_enabled = true,
-	}
-end
 opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer

@@ -1,52 +1,11 @@
 require("config")
 
--- require('packer').startup(function(use)
---   -- github copilot
---   use 'github/copilot.vim'
---   use 'mechatroner/rainbow_csv'
+-- TODO: Add the following plugins
 --   use 'airblade/vim-rooter'
---
---   -- Autocompletion
---   use {
---     'hrsh7th/nvim-cmp',
---     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
---   }
---   -- while tree-sitter doesn't work for typescript
---   use {
---     "pmizio/typescript-tools.nvim",
---     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
---   }
+--   use "pmizio/typescript-tools.nvim",
 --   use 'tpope/vim-surround'
 --   use 'tpope/vim-fugitive' -- :Git commands
 --   use 'tpope/vim-rhubarb' -- enables :GBrowse
---   use 'lewis6991/gitsigns.nvim' -- gutter decorations for git
---
---   -- theming --
---   use 'dracula/vim'
---   use 'ellisonleao/gruvbox.nvim'
---   use 'folke/tokyonight.nvim'
---   use { "catppuccin/nvim", as = "catppuccin" }
---   -- toggle themes via :Themery
---   use 'zaldih/themery.nvim'
---
---   -- STYLING--
 --   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
---
---   -- for file explorer
---   use 'nvim-tree/nvim-web-devicons'
---
---   -- allow for better jumping
---   use {
---     'easymotion/vim-easymotion',
---   }
---
---   -- vim hard time, makes my life harder
---   use {
---     'm4xshen/hardtime.nvim',
---     requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
---     config = function()
---       require("hardtime").setup()
---     end,
---   }
---
--- end)
+--   use 'easymotion/vim-easymotion',
+--   use 'm4xshen/hardtime.nvim',
