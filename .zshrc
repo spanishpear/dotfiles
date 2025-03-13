@@ -14,18 +14,18 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
- 
+
 plugins=(
  fnm
- git 
- fzf 
- zsh-syntax-highlighting 
- zsh-autosuggestions 
+ git
+ fzf
+ zsh-syntax-highlighting
+ zsh-autosuggestions
  yarn
  z
  diff-so-fancy
 )
- 
+
 source $ZSH/oh-my-zsh.sh
 
 export MANPATH="/usr/local/man:$MANPATH"
@@ -42,7 +42,7 @@ fzf-git-checkout() {
 # $2 is the remote name
 git-fetch-and-checkout-from-origin() {
   set +x
-  local branch 
+  local branch
   local remote
 
   branch=$1
@@ -131,3 +131,5 @@ fi
 if [[ -f ~/.afm-git-configrc ]]; then
    source ~/.afm-git-configrc
 fi
+
+# vim: set ft=zsh:
