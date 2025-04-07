@@ -7,18 +7,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Next diagnostic"})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Previous diagnostic"})
-vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = '[D]iagnostic AAAAAAA [O]pen' })
-vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = '[D]iagnostic [Q]uickfix' })
--- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
@@ -222,4 +210,23 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
+-- [[ Basic Keymaps ]]
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Enable Comment.nvim
 require('Comment').setup()
+
+-- [[ Configure Treesitter ]]
+-- See `:help nvim-treesitter`
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {desc = "Next diagnostic"})
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {desc = "Previous diagnostic"})
+vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = '[D]iagnostic [Q]uickfix' })
+
+-- The line beneath this is called `modeline`. See `:help modeline`
