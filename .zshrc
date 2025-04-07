@@ -128,8 +128,5 @@ if [[ -f ~/.zshrc-$HOST ]]; then
    source ~/.zshrc-$HOST
 fi
 
-if [[ -f ~/.afm-git-configrc ]]; then
-   source ~/.afm-git-configrc
-fi
 
 # vim: set ft=zsh:
