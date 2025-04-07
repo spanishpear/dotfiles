@@ -1,2 +1,3 @@
 *.deb
 .config/micro/backups
+.DS_Store

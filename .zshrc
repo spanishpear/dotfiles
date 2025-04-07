@@ -127,6 +127,5 @@ if [[ -f ~/.zshrc-$HOST ]]; then
    source ~/.zshrc-$HOST
 fi
 
-if [[ -f ~/.afm-git-configrc ]]; then
-   source ~/.afm-git-configrc
-fi
+
+export PATH="/Users/ssomaiya/.orbit/bin:$PATH"
