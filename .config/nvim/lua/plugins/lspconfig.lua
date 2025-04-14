@@ -80,7 +80,6 @@ return {
 					"shfmt",
 					"shellharden",
 					"lua_ls",
-					"rust_analyzer",
 					"bashls",
 				},
 			})

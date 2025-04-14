@@ -145,3 +145,11 @@ map("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)
 -- :BarbarDisable - very bad command, should never be used
+-- folke/todo-comments.nvim
+map("n", "]t", function()
+	require("todo-comments").jump_next()
+end, { desc = "Next [t]odo comment" })
+
+map("n", "[t", function()
+	require("todo-comments").jump_prev()
+end, { desc = "Previous [t]odo comment" })

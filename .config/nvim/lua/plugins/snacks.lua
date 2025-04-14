@@ -545,6 +545,14 @@ return {
 			end,
 			desc = "LSP Workspace Symbols",
 		},
+		-- TODO: why doesn't this work by default?
+		{
+			"<leader>ca",
+			function()
+				vim.lsp.buf.code_action()
+			end,
+			desc = "LSP Code Action",
+		},
 		-- Other
 		{
 			"<leader>z",
