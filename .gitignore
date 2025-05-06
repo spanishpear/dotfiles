@@ -1,3 +1,5 @@
 *.deb
 .config/micro/backups
 .DS_Store
+*.zsh_history
+*.zcompdump*
