@@ -67,7 +67,7 @@ git-fetch-and-checkout-from-origin() {
 #
 # Example aliases
 alias zshconfig="micro ~/.zshrc"
-alias zshrc="nvim $HOME/.zshrc && source $HOME/.zshrc "
+alias zshrc="nvim $ZDOTDIR/.zshrc && source $ZDOTDIR/.zshrc "
 alias nvimrc="cd $HOME/.config/nvim/ && nvim init.lua && cd -"
 alias ohmyzsh="code ~/.oh-my-zsh"
 alias lazygit="lazygit --use-config-file='$HOME/.config/lazygit/config.yml'"
@@ -115,16 +115,14 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
-
 export GPG_TTY=`tty`
 
 # https://github.com/nodejs/node/issues/52229
 export CXXFLAGS='-DNODE_API_EXPERIMENTAL_NOGC_ENV_OPT_OUT'
 
-if [[ -f ~/.zshrc-$HOST ]]; then
-   [[ ! -f ~/.zshrc-$HOST.zwc || ~/.zshrc-$HOST -nt ~/.zshrc-$HOST.zwc ]] && { zcompile ~/.zshrc-$HOST;}
-   source ~/.zshrc-$HOST
+if [[ -f $ZDOTDIR/.zshrc-$HOST ]]; then
+   [[ ! -f $ZDOTDIR/.zshrc-$HOST.zwc || $ZDOTDIR/.zshrc-$HOST -nt $ZDOTDIR/.zshrc-$HOST.zwc ]] && { zcompile $ZDOTDIR/.zshrc-$HOST;}
+   source $ZDOTDIR/.zshrc-$HOST
 fi
 
 
