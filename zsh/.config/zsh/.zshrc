@@ -35,7 +35,17 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 fzf-git-checkout() {
     git branch | grep -v "^\*" | fzf --height=20% --reverse --info=inline | xargs git checkout
 }
-
+wt() {
+    if [[ "$1" == "switch" ]]; then
+        dir=$(auto-worktree "$@" | grep -v "^\s*$" | grep "/" | tail -n1 | sed 's/\x1B\[[0-9;]*[a-zA-Z]//g' | tr -d '\n')
+        local exit_status=$?
+        if [[ $exit_status -eq 0 && -d "$dir" ]]; then
+            cd "$dir"
+        fi
+    else
+        auto-worktree "$@"
+    fi
+}
 
 # $1 is the branch name
 # $2 is the remote name
@@ -127,3 +137,11 @@ fi
 
 
 # vim: set ft=zsh:
+
+# pnpm
+export PNPM_HOME="/Users/ssomaiya/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
