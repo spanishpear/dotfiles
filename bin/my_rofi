@@ -1,8 +1,0 @@
-rofi \
-	-modi combi,run,ssh \
-	-show combi -combi-modi drun,ssh -show-icons \
-	-display-combi APPS \
-	-display-drun "$" \
-	-display-window "󰖯" \
-	-display-file-browser FILES \
-	-display-run SHELL
