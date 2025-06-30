@@ -4,6 +4,11 @@
 # if you don't care. Should ensure we use a .stow-local-ignore tho, to not stow, e.g. `README.md`
 # assume dotfiles is in $HOME/dev
 
+if [ ! -d "$HOME"/dev/dotfiles ]; then
+	echo -e "Error: dotfiles dir doesn't exist"
+	exit 1
+fi
+
 # stow zsh configuration
 stow --dir "$HOME"/dev/dotfiles/ --target "$HOME" zsh --verbose
 
