@@ -29,4 +29,4 @@ if command -v fnm &> /dev/null; then
     eval "$(fnm env --use-on-cd)" &> /dev/null
 fi
 
-eval "$(~/.local/bin/mise activate zsh)"
+echo 'eval "$(mise activate zsh)"' >> "${ZDOTDIR-$HOME}/.zshrc"

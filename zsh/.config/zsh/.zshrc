@@ -1,3 +1,5 @@
+# vim: set ft=zsh:
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -136,7 +138,6 @@ if [[ -f $ZDOTDIR/.zshrc-$HOST ]]; then
 fi
 
 
-# vim: set ft=zsh:
 
 # pnpm
 export PNPM_HOME="/Users/ssomaiya/.local/share/pnpm"
@@ -145,3 +146,4 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+eval "$(mise activate zsh)"

@@ -5,3 +5,4 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
+echo 'eval "$(mise activate zsh)"' >> "${ZDOTDIR-$HOME}/.zshrc"
